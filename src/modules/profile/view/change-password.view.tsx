@@ -34,7 +34,7 @@ const ChangePasswordViewPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <main className="mx-auto max-w-md p-4 pb-24">
+      <main className="mx-auto max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-4xl p-4 sm:p-6 md:p-8 pb-24">
         {/* Header */}
         <div className="flex items-center gap-3 pb-6 pt-4">
           <Button

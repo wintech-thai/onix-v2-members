@@ -38,7 +38,7 @@ export const BottomNavigation = () => {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
-      <div className="mx-auto flex h-16 max-w-md items-center justify-around px-4">
+      <div className="mx-auto flex h-16 max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-4xl items-center justify-around px-4 sm:px-6 md:px-8">
         {navItems.map((item) => {
           const isActive = pathname === item.path;
           const Icon = item.icon;

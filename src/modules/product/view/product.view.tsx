@@ -81,7 +81,7 @@ const ProductViewPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Main content with bottom padding for navigation */}
-      <main className="mx-auto max-w-md p-4 pb-24">
+      <main className="mx-auto max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-4xl p-4 sm:p-6 md:p-8 pb-24">
         {/* Header */}
         <div className="flex items-center justify-between pb-4 pt-4">
           <div className="space-y-2">

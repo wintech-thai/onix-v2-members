@@ -56,15 +56,10 @@ const RootViewPage = () => {
     // TODO: Navigate to buy points page
   };
 
-  const handleViewAllTransactions = () => {
-    console.log("View all transactions clicked");
-    // TODO: Navigate to transaction history page
-  };
-
   return (
     <div className="min-h-screen bg-background">
       {/* Main content with bottom padding for navigation */}
-      <main className="mx-auto max-w-md space-y-6 p-4 pb-24">
+      <main className="mx-auto max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-4xl space-y-6 p-4 sm:p-6 md:p-8 pb-24">
         {/* Header */}
         <div className="space-y-2 pt-4">
           <h1 className="text-2xl font-bold">Welcome Back!</h1>

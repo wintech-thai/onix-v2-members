@@ -17,6 +17,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BottomNavigation } from "@/modules/root/components/BottomNavigation";
 import { RouteConfig } from "@/config/route.config";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 // Mock user data - replace with real data from API
 const mockUser = {
@@ -60,7 +61,7 @@ const ProfileViewPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Main content with bottom padding for navigation */}
-      <main className="mx-auto max-w-md p-4 pb-24">
+      <main className="mx-auto max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-4xl p-4 sm:p-6 md:p-8 pb-24 md:pb-24">
         {/* Header */}
         <div className="space-y-2 pb-6 pt-4">
           <h1 className="text-2xl font-bold">Profile</h1>
@@ -149,6 +150,8 @@ const ProfileViewPage = () => {
                 </div>
                 <ChevronRight className="h-5 w-5 text-muted-foreground" />
               </button>
+
+              <ThemeToggle />
 
               <button
                 onClick={handleViewConsent}
