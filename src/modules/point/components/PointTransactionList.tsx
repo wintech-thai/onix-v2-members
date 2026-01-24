@@ -1,23 +1,16 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { ArrowUpRight, ArrowDownRight, ChevronRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { RouteConfig } from "@/config/route.config";
-
-interface Transaction {
-  id: string;
-  type: "earned" | "spent";
-  amount: number;
-  description: string;
-  date: Date;
-}
+import { IPointTransaction } from "../api/point.api";
+import dayjs from "dayjs";
 
 interface PointTransactionListProps {
-  transactions: Transaction[];
+  transactions: IPointTransaction[];
 }
 
 const formatDate = (date: Date) => {
@@ -40,9 +33,10 @@ export const PointTransactionList = ({
   transactions,
 }: PointTransactionListProps) => {
   const router = useRouter();
+  const params = useParams<{ orgId: string }>();
 
   const handleViewAll = () => {
-    router.push(RouteConfig.POINT_HISTORY);
+    router.push(RouteConfig.POINT_HISTORY(params.orgId));
   };
 
   return (
@@ -60,10 +54,19 @@ export const PointTransactionList = ({
         </Button>
       </div>
 
-      <ScrollArea className="h-100 pr-4">
-        <div className="space-y-2">
-          {transactions.map((transaction) => {
-            const isEarned = transaction.type === "earned";
+      <div className="space-y-2">
+        {transactions.length === 0 ? (
+          <Card>
+            <CardContent className="flex items-center justify-center p-8">
+              <p className="text-sm text-muted-foreground">
+                No transactions yet
+              </p>
+            </CardContent>
+          </Card>
+        ) : (
+          transactions.map((transaction) => {
+            // txType: 1 = earned, -1 = spent
+            const isEarned = transaction.txType === 1;
             const Icon = isEarned ? ArrowDownRight : ArrowUpRight;
 
             return (
@@ -84,10 +87,13 @@ export const PointTransactionList = ({
 
                   <div className="flex-1 space-y-1">
                     <p className="text-sm font-medium leading-none">
-                      {transaction.description}
+                      {transaction.description ||
+                        (isEarned ? "Points Earned" : "Points Spent")}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      {formatDate(transaction.date)}
+                      {dayjs(transaction.createdDate).format(
+                        "DD MMM YYYY HH:mm [GMT] Z"
+                      )}
                     </p>
                   </div>
 
@@ -100,7 +106,7 @@ export const PointTransactionList = ({
                       }`}
                     >
                       {isEarned ? "+" : "-"}
-                      {transaction.amount.toLocaleString()}
+                      {transaction.txAmount.toLocaleString()}
                     </span>
                     <Badge
                       variant={isEarned ? "default" : "secondary"}
@@ -112,9 +118,9 @@ export const PointTransactionList = ({
                 </CardContent>
               </Card>
             );
-          })}
-        </div>
-      </ScrollArea>
+          })
+        )}
+      </div>
     </div>
   );
 };

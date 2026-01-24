@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Check } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BottomNavigation } from "@/modules/root/components/BottomNavigation";
+import { BottomNavigation } from "@/modules/point/components/BottomNavigation";
 import { RouteConfig } from "@/config/route.config";
 
 const languages = [
@@ -16,9 +16,10 @@ const languages = [
 const LanguageSettingsViewPage = () => {
   const router = useRouter();
   const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const params = useParams<{ orgId: string }>();
 
   const handleBack = () => {
-    router.push(RouteConfig.PROFILE.PROFILE);
+    router.push(RouteConfig.PROFILE.PROFILE(params.orgId));
   };
 
   const handleSelectLanguage = (code: string) => {

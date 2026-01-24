@@ -1,0 +1,47 @@
+"use client";
+
+import { Building2, Sparkles } from "lucide-react";
+
+interface OrgHeaderProps {
+  orgName?: string;
+}
+
+export const OrgHeader = ({
+  orgName = "Demo Organization",
+}: OrgHeaderProps) => {
+  return (
+    <div className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 border-b">
+      <div className="mx-auto max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-4xl">
+        <div className="flex items-center justify-between py-3 px-4">
+          {/* Organization Info */}
+          <div className="flex items-center gap-3">
+            {/* Logo with gradient */}
+            <div className="relative h-11 w-11 rounded-xl bg-gradient-to-br from-primary/20 via-primary/10 to-primary/5 flex items-center justify-center shadow-sm">
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/10 to-transparent" />
+              <Building2
+                className="h-5 w-5 text-primary relative z-10"
+                strokeWidth={2.5}
+              />
+            </div>
+
+            {/* Text Content */}
+            <div className="flex flex-col">
+              <h2 className="font-bold text-sm leading-tight text-foreground">
+                {orgName}
+              </h2>
+              <div className="flex items-center gap-1">
+                <Sparkles className="h-3 w-3 text-primary/70" strokeWidth={2} />
+                <p className="text-xs text-muted-foreground">
+                  Powered by{" "}
+                  <span className="font-semibold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                    Please-Scan
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

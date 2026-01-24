@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
 import {
   User,
   Phone,
@@ -12,12 +13,15 @@ import {
   ChevronRight,
   LogOut,
   Mail,
+  Info,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BottomNavigation } from "@/modules/root/components/BottomNavigation";
+import { OrgHeader } from "@/components/org-header";
+import { BottomNavigation } from "@/modules/point/components/BottomNavigation";
 import { RouteConfig } from "@/config/route.config";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { env } from "next-runtime-env";
 
 // Mock user data - replace with real data from API
 const mockUser = {
@@ -31,7 +35,10 @@ const mockUser = {
 
 const ProfileViewPage = () => {
   const router = useRouter();
+  const params = useParams<{ orgId: string }>();
   const [user] = useState(mockUser);
+
+  const appVersion = env("NEXT_PUBLIC_APP_VERSION");
 
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("en-US", {
@@ -42,15 +49,15 @@ const ProfileViewPage = () => {
   };
 
   const handleChangePassword = () => {
-    router.push(RouteConfig.PROFILE.CHANGE_PASSWORD);
+    router.push(RouteConfig.PROFILE.CHANGE_PASSWORD(params.orgId));
   };
 
   const handleChangeLanguage = () => {
-    router.push(RouteConfig.PROFILE.LANGUAGE);
+    router.push(RouteConfig.PROFILE.LANGUAGE(params.orgId));
   };
 
   const handleViewConsent = () => {
-    router.push(RouteConfig.PROFILE.CONSENT);
+    router.push(RouteConfig.PROFILE.CONSENT(params.orgId));
   };
 
   const handleLogout = () => {
@@ -60,6 +67,9 @@ const ProfileViewPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Organization Header */}
+      <OrgHeader />
+
       {/* Main content with bottom padding for navigation */}
       <main className="mx-auto max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-4xl p-4 sm:p-6 md:p-8 pb-24 md:pb-24">
         {/* Header */}
@@ -166,6 +176,38 @@ const ProfileViewPage = () => {
                 </div>
                 <ChevronRight className="h-5 w-5 text-muted-foreground" />
               </button>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* App Version */}
+        <div className="mb-6 space-y-3">
+          <h3 className="text-sm font-semibold text-muted-foreground">
+            APP INFO
+          </h3>
+
+          <Card>
+            <CardContent className="p-4 space-y-3">
+              <div className="flex items-center gap-3">
+                <Info className="h-5 w-5 text-muted-foreground" />
+                <div className="flex-1">
+                  <p className="font-medium">App Version</p>
+                  <p className="text-sm text-muted-foreground">
+                    versions: {env("NEXT_PUBLIC_APP_VERSION")}
+                  </p>
+                </div>
+              </div>
+
+              <div className="border-t pt-3">
+                <Link
+                  target="_blank"
+                  href={env("NEXT_PUBLIC_PROVIDER_URL") ?? ""}
+                  className="text-sm text-muted-foreground hover:underline hover:text-foreground transition-colors"
+                >
+                  &copy; {new Date().getFullYear()} Dev Hub Co., Ltd. All rights
+                  reserved.
+                </Link>
+              </div>
             </CardContent>
           </Card>
         </div>

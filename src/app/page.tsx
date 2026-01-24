@@ -1,4 +1,4 @@
-import RootViewPage from "@/modules/root/view/root.view";
+import RootViewPage from "@/modules/point/view/root.view";
 
 const RootPage = () => {
   return <RootViewPage />;

@@ -7,6 +7,7 @@ export const COOKIE_NAMES = {
   ACCESS_TOKEN: "access_token",
   REFRESH_TOKEN: "refresh_token",
   USER_NAME: "user_name",
+  ORG_ID: "org_id",
 } as const;
 
 // Token expiration times

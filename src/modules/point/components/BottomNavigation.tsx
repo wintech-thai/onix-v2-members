@@ -1,51 +1,52 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { Home, Gift, ShoppingBag, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RouteConfig } from "@/config/route.config";
 
-const navItems = [
-  {
-    label: "Home",
-    icon: Home,
-    path: RouteConfig.ROOT,
-  },
-  {
-    label: "Privilege",
-    icon: Gift,
-    path: RouteConfig.PRIVILEGE.LIST,
-  },
-  {
-    label: "Product",
-    icon: ShoppingBag,
-    path: RouteConfig.PRODUCT.LIST,
-  },
-  {
-    label: "Profile",
-    icon: User,
-    path: RouteConfig.PROFILE.PROFILE,
-  },
-];
-
 export const BottomNavigation = () => {
   const pathname = usePathname();
   const router = useRouter();
+  const params = useParams<{ orgId: string }>();
 
   const handleNavigation = (path: string) => {
     router.push(path);
   };
 
+  const navItems = [
+    {
+      label: "Home",
+      icon: Home,
+      path: RouteConfig.ROOT(params.orgId),
+    },
+    {
+      label: "Privilege",
+      icon: Gift,
+      path: RouteConfig.PRIVILEGE.LIST(params.orgId),
+    },
+    {
+      label: "Product",
+      icon: ShoppingBag,
+      path: RouteConfig.PRODUCT.LIST(params.orgId),
+    },
+    {
+      label: "Profile",
+      icon: User,
+      path: RouteConfig.PROFILE.PROFILE(params.orgId),
+    },
+  ];
+
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="mx-auto flex h-16 max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-4xl items-center justify-around px-4 sm:px-6 md:px-8">
-        {navItems.map((item) => {
+        {navItems.map((item, i) => {
           const isActive = pathname === item.path;
           const Icon = item.icon;
 
           return (
             <Button
-              key={item.path}
+              key={i}
               variant="ghost"
               size="sm"
               onClick={() => handleNavigation(item.path)}

@@ -3,6 +3,7 @@
 import { Wallet, Plus } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { DialogComingSoon } from "@/components/ui/dialog-coming-soon";
 
 interface PointCardProps {
   points: number;
@@ -36,14 +37,16 @@ export const PointCard = ({ points, onBuyPoints }: PointCardProps) => {
           <p className="text-sm text-white/70">Available balance</p>
         </div>
 
-        <Button
-          onClick={onBuyPoints}
-          className="w-full bg-white text-primary hover:bg-white/90"
-          size="lg"
-        >
-          <Plus className="mr-2 h-4 w-4" />
-          Buy Points
-        </Button>
+        <DialogComingSoon>
+          <Button
+            onClick={onBuyPoints}
+            className="w-full bg-white text-primary hover:bg-white/90 cursor-pointer"
+            size="lg"
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Buy Points
+          </Button>
+        </DialogComingSoon>
       </CardContent>
     </Card>
   );
