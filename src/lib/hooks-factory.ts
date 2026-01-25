@@ -58,6 +58,7 @@ export function createMutationHook<TResponse, TRequest, TParams>(
           params: TParams;
           data?: TRequest;
         }) => InvalidateConfig[]);
+    suppressDefaultErrorToast?: boolean;
   }
 ) {
   return (
@@ -68,10 +69,18 @@ export function createMutationHook<TResponse, TRequest, TParams>(
     >
   ) => {
     const queryClient = useQueryClient();
+    const defaultErrorToast = useErrorToast();
 
     return useMutation({
       mutationFn: ({ params, data }) => service.mutate(params, data),
-      onError: useErrorToast(),
+      onError: (error, variables, onMutateResult, context) => {
+        // Only call default error toast if not suppressed
+        if (!config?.suppressDefaultErrorToast) {
+          defaultErrorToast(error, variables, context);
+        }
+        // Always call custom onError if provided
+        options?.onError?.(error, variables, onMutateResult, context);
+      },
       onSuccess: async (data, variables, onMutateResult, context) => {
         if (config?.invalidates) {
           const invalidateConfigs =

@@ -14,8 +14,11 @@ import { useParams, useRouter } from "next/navigation";
 import { DialogComingSoon } from "@/components/ui/dialog-coming-soon";
 import Image from "next/image";
 import { RouteConfig } from "@/config/route.config";
+import { useTranslation } from "react-i18next";
 
 const LoginViewPage = () => {
+  const { t } = useTranslation("auth");
+
   const router = useRouter();
   const params = useParams<{ orgId: string }>();
   const form = useForm<LoginSchemaType>({
@@ -41,8 +44,11 @@ const LoginViewPage = () => {
       },
       {
         onSuccess: () => {
-          toast.success("Login successfully");
+          toast.success(t("message.loginSuccess"));
           return router.push(RouteConfig.ROOT(params.orgId));
+        },
+        onError: () => {
+          toast.error(t("message.loginFailed"));
         },
       }
     );
@@ -73,8 +79,10 @@ const LoginViewPage = () => {
               render={({ field }) => (
                 <Input
                   {...field}
-                  placeholder="Username"
+                  isRequired
+                  label={t("form.userName")}
                   errorMessage={form.formState.errors.userName?.message}
+                  t={t}
                   disabled={disabled}
                 />
               )}
@@ -86,19 +94,21 @@ const LoginViewPage = () => {
               render={({ field }) => (
                 <Input
                   {...field}
-                  placeholder="Password"
+                  isRequired
+                  label={t("form.password")}
                   errorMessage={form.formState.errors.password?.message}
+                  t={t}
                   disabled={disabled}
                 />
               )}
             />
 
             <Button type="submit" className="w-full" disabled={disabled}>
-              LOGIN
+              {t("form.action.loginButton")}
             </Button>
             <DialogComingSoon>
               <div className="text-left cursor-pointer">
-                <p>forgot password?</p>
+                <p>{t("form.action.forgotButton")}</p>
               </div>
             </DialogComingSoon>
           </form>

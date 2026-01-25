@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { RouteConfig } from "@/config/route.config";
 import { IPointTransaction } from "../api/point.api";
 import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 
 interface PointTransactionListProps {
   transactions: IPointTransaction[];
@@ -34,6 +35,7 @@ export const PointTransactionList = ({
 }: PointTransactionListProps) => {
   const router = useRouter();
   const params = useParams<{ orgId: string }>();
+  const { t } = useTranslation("point");
 
   const handleViewAll = () => {
     router.push(RouteConfig.POINT_HISTORY(params.orgId));
@@ -42,14 +44,14 @@ export const PointTransactionList = ({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Recent Transactions</h2>
+        <h2 className="text-lg font-semibold">{t("recentTransactions")}</h2>
         <Button
           variant="ghost"
           size="sm"
           onClick={handleViewAll}
           className="text-sm text-muted-foreground hover:text-foreground"
         >
-          View All
+          {t("viewAll")}
           <ChevronRight className="ml-1 h-4 w-4" />
         </Button>
       </div>
@@ -59,7 +61,7 @@ export const PointTransactionList = ({
           <Card>
             <CardContent className="flex items-center justify-center p-8">
               <p className="text-sm text-muted-foreground">
-                No transactions yet
+                {t("noTransactionsYet")}
               </p>
             </CardContent>
           </Card>
@@ -88,7 +90,7 @@ export const PointTransactionList = ({
                   <div className="flex-1 space-y-1">
                     <p className="text-sm font-medium leading-none">
                       {transaction.description ||
-                        (isEarned ? "Points Earned" : "Points Spent")}
+                        (isEarned ? t("pointsEarned") : t("pointsSpent"))}
                     </p>
                     <p className="text-xs text-muted-foreground">
                       {dayjs(transaction.createdDate).format(
@@ -112,7 +114,7 @@ export const PointTransactionList = ({
                       variant={isEarned ? "default" : "secondary"}
                       className="text-xs"
                     >
-                      {isEarned ? "Earned" : "Spent"}
+                      {isEarned ? t("earned") : t("spent")}
                     </Badge>
                   </div>
                 </CardContent>

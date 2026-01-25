@@ -4,6 +4,7 @@ import { Wallet, Plus } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { DialogComingSoon } from "@/components/ui/dialog-coming-soon";
+import { useTranslation } from "react-i18next";
 
 interface PointCardProps {
   points: number;
@@ -11,6 +12,8 @@ interface PointCardProps {
 }
 
 export const PointCard = ({ points, onBuyPoints }: PointCardProps) => {
+  const { t } = useTranslation("point");
+
   return (
     <Card className="relative overflow-hidden border-none bg-primary shadow-lg">
       {/* Decorative elements */}
@@ -22,7 +25,9 @@ export const PointCard = ({ points, onBuyPoints }: PointCardProps) => {
           <div className="rounded-full bg-white/20 p-2 backdrop-blur-sm">
             <Wallet className="h-5 w-5 text-white" />
           </div>
-          <span className="text-sm font-medium text-white/90">Your Points</span>
+          <span className="text-sm font-medium text-white/90">
+            {t("yourPoints")}
+          </span>
         </div>
       </CardHeader>
 
@@ -32,9 +37,11 @@ export const PointCard = ({ points, onBuyPoints }: PointCardProps) => {
             <span className="text-5xl font-bold tracking-tight text-white">
               {points.toLocaleString()}
             </span>
-            <span className="text-lg font-medium text-white/80">pts</span>
+            <span className="text-lg font-medium text-white/80">
+              {t("pts")}
+            </span>
           </div>
-          <p className="text-sm text-white/70">Available balance</p>
+          <p className="text-sm text-white/70">{t("availableBalance")}</p>
         </div>
 
         <DialogComingSoon>
@@ -44,7 +51,7 @@ export const PointCard = ({ points, onBuyPoints }: PointCardProps) => {
             size="lg"
           >
             <Plus className="mr-2 h-4 w-4" />
-            Buy Points
+            {t("buyPoints")}
           </Button>
         </DialogComingSoon>
       </CardContent>

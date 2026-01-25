@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { cn, errorMessageAsLangKey } from "@/lib/utils";
 import { Label } from "./label";
 
 function Input({
@@ -10,12 +10,15 @@ function Input({
   errorMessage,
   helperText,
   isRequired,
+  t,
   ...props
 }: React.ComponentProps<"input"> & {
   isRequired?: boolean;
   label?: string;
   errorMessage?: string;
   helperText?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  t?: any;
 }) {
   const id = React.useId();
 
@@ -50,7 +53,7 @@ function Input({
           role="alert"
           aria-live="polite"
         >
-          {errorMessage}
+          {errorMessageAsLangKey(errorMessage, t)}
         </p>
       )}
 

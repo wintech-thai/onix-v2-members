@@ -26,4 +26,3 @@ export const RouteConfig = {
     CONSENT: (orgId: string) => `/${orgId}/profile/consent`,
   },
 };
-

@@ -8,18 +8,14 @@ import {
 } from "./dialog";
 import { Clock, Rocket, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   children: React.ReactNode;
-  title?: string;
-  description?: string;
 };
 
-export const DialogComingSoon = ({
-  children,
-  title = "Coming Soon",
-  description = "This feature is currently under development. Stay tuned for updates!",
-}: Props) => {
+export const DialogComingSoon = ({ children }: Props) => {
+  const { t } = useTranslation("common");
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -49,7 +45,7 @@ export const DialogComingSoon = ({
                   repeat: Infinity,
                   ease: "linear",
                 }}
-                className="absolute inset-0 rounded-full bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 opacity-20 blur-2xl"
+                className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 opacity-20 blur-2xl"
               />
               <Rocket className="w-24 h-24 text-blue-600 dark:text-blue-400 relative z-10" />
             </div>
@@ -61,7 +57,7 @@ export const DialogComingSoon = ({
             transition={{ delay: 0.2 }}
           >
             <span className="w-full h-full text-5xl md:text-6xl font-bold mb-4 bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-              {title}
+              {t("comingSoon.title")}
             </span>
           </motion.div>
 
@@ -71,8 +67,11 @@ export const DialogComingSoon = ({
             transition={{ delay: 0.4 }}
             className="mb-8"
           >
-            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-2">
-              {description}
+            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-2 mt-2">
+              {t("comingSoon.description")}
+            </p>
+            <p className="text-sm md:text-base text-gray-500 dark:text-gray-400">
+              {t("comingSoon.subDescription")}
             </p>
           </motion.div>
 
@@ -92,7 +91,7 @@ export const DialogComingSoon = ({
               className="flex flex-col items-center gap-2"
             >
               <Sparkles className="w-8 h-8" />
-              <span className="text-sm">New Features</span>
+              <span className="text-sm">{t("comingSoon.newFeatures")}</span>
             </motion.div>
 
             <motion.div
@@ -106,7 +105,7 @@ export const DialogComingSoon = ({
               className="flex flex-col items-center gap-2"
             >
               <Clock className="w-8 h-8" />
-              <span className="text-sm">Stay Tuned</span>
+              <span className="text-sm">{t("comingSoon.stayTuned")}</span>
             </motion.div>
           </motion.div>
 
@@ -130,7 +129,7 @@ export const DialogComingSoon = ({
                 className="w-2 h-2 rounded-full bg-blue-500"
               />
               <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                In Development
+                {t("comingSoon.inDevelopment")}
               </span>
             </div>
           </motion.div>

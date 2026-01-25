@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AxiosError } from "axios";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -5,6 +7,12 @@ import { toast } from "sonner";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+export function errorMessageAsLangKey(message: string | undefined, t: any): string | undefined {
+  if (!message) return undefined;
+
+  return t(message as any);
 }
 
 /**
@@ -32,7 +40,7 @@ export function extractApiNameFromError(error: AxiosError | null | undefined): s
 
 export function useErrorToast() {
 
-  return (error: AxiosError) => {
+  return (error: AxiosError, _variables?: unknown, _context?: unknown) => {
     const status = error.response?.status;
 
     if (status === 403) {

@@ -58,7 +58,7 @@ export const QRScannerDialog = ({
           stopScanner();
           onOpenChange(false);
         },
-        (errorMessage) => {
+        () => {
           // Error callback (can be ignored for scanning errors)
           // console.log("Scanning...", errorMessage);
         }
@@ -96,6 +96,7 @@ export const QRScannerDialog = ({
     } else {
       stopScanner();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const handleClose = () => {

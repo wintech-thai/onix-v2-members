@@ -14,9 +14,11 @@ import { QRScannerDialog } from "@/components/ui/qr-scanner-dialog";
 import { RefreshCw, QrCode } from "lucide-react";
 import { PointCard } from "../components/PointCard";
 import { PointTransactionList } from "../components/PointTransactionList";
+import { useTranslation } from "react-i18next";
 
 const RootViewPage = () => {
   const params = useParams<{ orgId: string }>();
+  const { t } = useTranslation(["point", "common"]);
   const [isScannerOpen, setIsScannerOpen] = useState(false);
 
   const getWallet = useGetWalletQuery(
@@ -87,9 +89,9 @@ const RootViewPage = () => {
           {/* Header with Actions */}
           <div className="flex items-start justify-between pt-4">
             <div className="space-y-2">
-              <h1 className="text-2xl font-bold">Welcome Back!</h1>
+              <h1 className="text-2xl font-bold">{t("common:welcome")}</h1>
               <p className="text-sm text-muted-foreground">
-                Manage your points and rewards
+                {t("manageYourPoint")}
               </p>
             </div>
 

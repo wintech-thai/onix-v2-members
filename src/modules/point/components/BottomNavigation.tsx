@@ -4,8 +4,10 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import { Home, Gift, ShoppingBag, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RouteConfig } from "@/config/route.config";
+import { useTranslation } from "react-i18next";
 
 export const BottomNavigation = () => {
+  const { t } = useTranslation("common");
   const pathname = usePathname();
   const router = useRouter();
   const params = useParams<{ orgId: string }>();
@@ -16,22 +18,22 @@ export const BottomNavigation = () => {
 
   const navItems = [
     {
-      label: "Home",
+      label: t("menu.point"),
       icon: Home,
       path: RouteConfig.ROOT(params.orgId),
     },
     {
-      label: "Privilege",
+      label: t("menu.privilege"),
       icon: Gift,
       path: RouteConfig.PRIVILEGE.LIST(params.orgId),
     },
     {
-      label: "Product",
+      label: t("menu.product"),
       icon: ShoppingBag,
       path: RouteConfig.PRODUCT.LIST(params.orgId),
     },
     {
-      label: "Profile",
+      label: t("menu.profile"),
       icon: User,
       path: RouteConfig.PROFILE.PROFILE(params.orgId),
     },

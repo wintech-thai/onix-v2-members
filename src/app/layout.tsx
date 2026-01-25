@@ -4,6 +4,9 @@ import "./globals.css";
 import { PublicEnvScript } from "next-runtime-env";
 import TanstackQueryProvider from "@/components/provider/tanstack-query-provider";
 import { Toaster } from "sonner";
+import TranslationsProvider from "@/components/provider/translations-provider";
+import { cookies } from "next/headers";
+import initTranslations, { i18nNamespaces } from "@/lib/i18n/i18n";
 
 const notoSansThai = Noto_Sans_Thai({
   variable: "--font-noto-sans-thai",
@@ -18,13 +21,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookiesStore = await cookies();
+  const locals = cookiesStore.get("i18next")?.value || "th";
+  const { resources } = await initTranslations(locals, i18nNamespaces);
+
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
+    <html lang="th" suppressHydrationWarning className="dark">
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -44,8 +51,14 @@ export default function RootLayout({
       </head>
       <body className={`${notoSansThai.variable} antialiased`}>
         <TanstackQueryProvider>
-          <Toaster expand richColors position="top-center" />
-          {children}
+          <TranslationsProvider
+            namespaces={i18nNamespaces}
+            locale={locals}
+            resources={resources}
+          >
+            <Toaster expand richColors position="top-center" />
+            {children}
+          </TranslationsProvider>
         </TanstackQueryProvider>
       </body>
     </html>

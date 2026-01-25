@@ -15,12 +15,14 @@ import { IPointTransaction } from "../api/point.api";
 import dayjs from "dayjs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { OrgLayout } from "@/components/layout/org-layout";
+import { useTranslation } from "react-i18next";
 
 const ITEMS_PER_PAGE = 10;
 
 const PointTransactionHistoryViewPage = () => {
   const router = useRouter();
   const params = useParams<{ orgId: string }>();
+  const { t } = useTranslation("point");
   const [currentPage, setCurrentPage] = useState(1);
 
   const getWallet = useGetWalletQuery({
@@ -117,7 +119,9 @@ const PointTransactionHistoryViewPage = () => {
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div>
-            <h1 className="text-2xl font-bold">Point Transaction History</h1>
+            <h1 className="text-2xl font-bold">
+              {t("pointTransactionHistory")}
+            </h1>
           </div>
         </div>
 
@@ -126,7 +130,7 @@ const PointTransactionHistoryViewPage = () => {
             <div className="flex items-center gap-2">
               <Coins className="h-5 w-5 text-primary" />
               <span className="text-sm text-muted-foreground">
-                Current Balance
+                {t("currentBalance")}
               </span>
             </div>
             <div className="flex items-center gap-2">
@@ -144,7 +148,7 @@ const PointTransactionHistoryViewPage = () => {
               <Card>
                 <CardContent className="flex items-center justify-center p-8">
                   <p className="text-sm text-muted-foreground">
-                    No transactions yet
+                    {t("noTransactionsYet")}
                   </p>
                 </CardContent>
               </Card>
@@ -174,8 +178,8 @@ const PointTransactionHistoryViewPage = () => {
                                 <h3 className="font-semibold">
                                   {transaction.description ||
                                     (isEarned
-                                      ? "Points Earned"
-                                      : "Points Spent")}
+                                      ? t("pointsEarned")
+                                      : t("pointsSpent"))}
                                 </h3>
                                 {transaction.tags && (
                                   <p className="text-sm text-muted-foreground">
@@ -199,7 +203,7 @@ const PointTransactionHistoryViewPage = () => {
                                     }`}
                                   >
                                     {isEarned ? "+" : "-"}{" "}
-                                    {transaction.txAmount} points
+                                    {transaction.txAmount} {t("points")}
                                   </p>
                                 </div>
                                 <ChevronRight className="h-5 w-5 text-muted-foreground" />
@@ -227,15 +231,15 @@ const PointTransactionHistoryViewPage = () => {
               className="gap-2"
             >
               <ChevronLeft className="h-4 w-4" />
-              Previous
+              {t("previous")}
             </Button>
 
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground">
-                Page {currentPage} of {totalPages}
+                {t("page")} {currentPage} {t("of")} {totalPages}
               </span>
               <span className="text-xs text-muted-foreground">
-                ({startIndex + 1}-{Math.min(endIndex, totalItems)} of{" "}
+                ({startIndex + 1}-{Math.min(endIndex, totalItems)} {t("of")}{" "}
                 {totalItems})
               </span>
             </div>
@@ -247,7 +251,7 @@ const PointTransactionHistoryViewPage = () => {
               disabled={currentPage === totalPages}
               className="gap-2"
             >
-              Next
+              {t("next")}
               <ChevronRight className="h-4 w-4" />
             </Button>
           </div>

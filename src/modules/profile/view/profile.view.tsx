@@ -22,6 +22,7 @@ import { BottomNavigation } from "@/modules/point/components/BottomNavigation";
 import { RouteConfig } from "@/config/route.config";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { env } from "next-runtime-env";
+import Cookie from "js-cookie";
 
 // Mock user data - replace with real data from API
 const mockUser = {
@@ -64,6 +65,8 @@ const ProfileViewPage = () => {
     console.log("Logout");
     // TODO: Implement logout logic
   };
+
+  const currentLang = Cookie.get("i18next") || "en";
 
   return (
     <div className="min-h-screen bg-background">
@@ -155,7 +158,7 @@ const ProfileViewPage = () => {
                 <div className="flex-1 text-left">
                   <p className="font-medium">Language</p>
                   <p className="text-xs text-muted-foreground">
-                    {user.language === "en" ? "English" : "ไทย"}
+                    {currentLang === "en" ? "English" : "ไทย"}
                   </p>
                 </div>
                 <ChevronRight className="h-5 w-5 text-muted-foreground" />
