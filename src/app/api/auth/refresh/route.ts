@@ -88,6 +88,13 @@ export async function POST(req: Request) {
       });
     }
 
+    cookiesStore.set({
+      name: COOKIE_NAMES.ORG_ID,
+      value: String(orgId),
+      ...COOKIE_OPTIONS,
+      maxAge: TOKEN_EXPIRY.REFRESH_TOKEN_SECONDS,
+    });
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Refresh token error:", error);

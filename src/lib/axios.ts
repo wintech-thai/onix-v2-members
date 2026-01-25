@@ -102,14 +102,28 @@ api.interceptors.response.use(
         processQueue(refreshError);
 
         // Refresh ล้มเหลว -> redirect ไป login
-        // window.location.href = "/auth/sign-in";
+        const pathSegments = window.location.pathname.split('/').filter(Boolean);
+        const orgId = pathSegments[0];
+
+        if (!orgId) {
+          window.location.href = '/';
+        } else {
+          window.location.href = `/${orgId}/auth/sign-in`;
+        }
         return Promise.reject(refreshError);
       }
     }
 
     // กรณีอื่นๆ ที่ไม่ใช่ 401
-    if (status === 401) {
-      // window.location.href = "/auth/sign-in";
+    if (status !== 401) {
+      const pathSegments = window.location.pathname.split('/').filter(Boolean);
+      const orgId = pathSegments[0];
+
+      if (!orgId) {
+        window.location.href = '/';
+      } else {
+        window.location.href = `/${orgId}/auth/sign-in`;
+      }
     }
 
     return Promise.reject(err);

@@ -51,7 +51,7 @@ const LoginViewPage = () => {
   return (
     <div className="h-full mx-auto max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-4xl space-y-6 p-4">
       <div className="h-full flex flex-col items-center justify-center">
-        <div className="w-md">
+        <div className="max-w-md w-full">
           <div className="flex items-center gap-x-2 w-full pb-4">
             <div className="rounded-md bg-gray-100/50 p-2">
               <Image

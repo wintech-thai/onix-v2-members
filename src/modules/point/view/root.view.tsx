@@ -19,12 +19,28 @@ const RootViewPage = () => {
   const params = useParams<{ orgId: string }>();
   const [isScannerOpen, setIsScannerOpen] = useState(false);
 
-  const getWallet = useGetWalletQuery({
-    orgId: params.orgId,
-  });
-  const getPointTransaction = useGetPointTransactionQuery({
-    orgId: params.orgId,
-  });
+  const getWallet = useGetWalletQuery(
+    {
+      orgId: params.orgId,
+    },
+    null,
+    {
+      refetchOnWindowFocus: true,
+      gcTime: 0,
+      staleTime: 0,
+    }
+  );
+  const getPointTransaction = useGetPointTransactionQuery(
+    {
+      orgId: params.orgId,
+    },
+    null,
+    {
+      refetchOnWindowFocus: true,
+      gcTime: 0,
+      staleTime: 0,
+    }
+  );
 
   const handleBuyPoints = () => {
     console.log("Buy points clicked");

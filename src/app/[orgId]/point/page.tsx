@@ -1,7 +1,7 @@
-import RootPage from "@/app/page";
+import RootViewPage from "@/modules/point/view/root.view";
 
 const PointPage = () => {
-  return <RootPage />;
+  return <RootViewPage />;
 };
 
 export default PointPage;

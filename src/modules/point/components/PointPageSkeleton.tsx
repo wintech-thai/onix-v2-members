@@ -5,7 +5,7 @@ import { OrgLayout } from "@/components/layout/org-layout";
 export const PointPageSkeleton = () => {
   return (
     <OrgLayout>
-      <main className="space-y-6 p-4 sm:p-6 md:p-8">
+      <main className="space-y-6 p-4">
         {/* Header Skeleton */}
         <div className="space-y-2 pt-4">
           <Skeleton className="h-8 w-48" />

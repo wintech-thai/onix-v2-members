@@ -68,7 +68,7 @@ export async function POST(req: Request) {
       secure: COOKIE_OPTIONS.secure,
       sameSite: COOKIE_OPTIONS.sameSite,
       path: "/",
-      maxAge: 1 * 365 * 24 * 60 * 60, // 1 years in seconds
+      maxAge: TOKEN_EXPIRY.REFRESH_TOKEN_SECONDS
     });
 
     return NextResponse.json({
