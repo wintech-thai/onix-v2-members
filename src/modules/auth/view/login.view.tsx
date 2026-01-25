@@ -15,12 +15,15 @@ import { DialogComingSoon } from "@/components/ui/dialog-coming-soon";
 import Image from "next/image";
 import { RouteConfig } from "@/config/route.config";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { EyeClosedIcon, EyeIcon } from "lucide-react";
 
 const LoginViewPage = () => {
   const { t } = useTranslation("auth");
 
   const router = useRouter();
   const params = useParams<{ orgId: string }>();
+  const [showPassword, setShowPassword] = useState(false);
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -92,14 +95,31 @@ const LoginViewPage = () => {
               name="password"
               control={form.control}
               render={({ field }) => (
-                <Input
-                  {...field}
-                  isRequired
-                  label={t("form.password")}
-                  errorMessage={form.formState.errors.password?.message}
-                  t={t}
-                  disabled={disabled}
-                />
+                <div className="relative">
+                  <Input
+                    {...field}
+                    type={showPassword ? "text" : "password"}
+                    isRequired
+                    label={t("form.password")}
+                    errorMessage={form.formState.errors.password?.message}
+                    t={t}
+                    disabled={disabled}
+                    className="pr-10"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    disabled={disabled}
+                    className="absolute right-3 top-12 text-sm text-gray-500 hover:text-gray-700"
+                  >
+                    {showPassword ? (
+                      <EyeClosedIcon className="w-5 h-5" />
+                    ) : (
+                      <EyeIcon className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
               )}
             />
 
