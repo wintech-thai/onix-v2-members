@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BottomNavigation } from "@/modules/root/components/BottomNavigation";
+import { BottomNavigation } from "@/modules/point/components/BottomNavigation";
 import { PrivilegeHistoryCard } from "../components/PrivilegeHistoryCard";
 import { RouteConfig } from "@/config/route.config";
 
@@ -67,13 +67,14 @@ const mockVouchers = [
 
 const PrivilegeHistoryViewPage = () => {
   const router = useRouter();
+  const params = useParams<{ orgId: string }>();
   const [activeTab, setActiveTab] = useState("available");
 
   const availableVouchers = mockVouchers.filter((v) => v.status === "unused");
   const usedVouchers = mockVouchers.filter((v) => v.status === "used");
 
   const handleBack = () => {
-    router.push(RouteConfig.PRIVILEGE.LIST);
+    router.push(RouteConfig.PRIVILEGE.LIST(params.orgId));
   };
 
   return (

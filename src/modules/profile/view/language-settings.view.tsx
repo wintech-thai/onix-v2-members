@@ -1,30 +1,32 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Check } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BottomNavigation } from "@/modules/root/components/BottomNavigation";
+import { BottomNavigation } from "@/modules/point/components/BottomNavigation";
 import { RouteConfig } from "@/config/route.config";
+import { useTranslation } from "react-i18next";
+import Cookie from "js-cookie";
 
 const languages = [
-  { code: "en", name: "English", nativeName: "English" },
-  { code: "th", name: "Thai", nativeName: "ไทย" },
+  { code: "th", name: "ภาษาไทย", nativeName: "Thai", flag: "🇹🇭" },
+  { code: "en", name: "English", nativeName: "English", flag: "🇺🇸" },
 ];
 
 const LanguageSettingsViewPage = () => {
   const router = useRouter();
-  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const params = useParams<{ orgId: string }>();
+  const { i18n } = useTranslation();
+  const currentLang = Cookie.get("i18next") || "en";
 
   const handleBack = () => {
-    router.push(RouteConfig.PROFILE.PROFILE);
+    router.push(RouteConfig.PROFILE.PROFILE(params.orgId));
   };
 
-  const handleSelectLanguage = (code: string) => {
-    setSelectedLanguage(code);
-    console.log("Language changed to:", code);
-    // TODO: Implement language change logic
+  const handleSelectLanguage = (langCode: string) => {
+    i18n.changeLanguage(langCode);
+    Cookie.set("i18next", langCode, { expires: 365 });
   };
 
   return (
@@ -50,23 +52,29 @@ const LanguageSettingsViewPage = () => {
 
         <Card>
           <CardContent className="divide-y p-0">
-            {languages.map((language) => (
-              <button
-                key={language.code}
-                onClick={() => handleSelectLanguage(language.code)}
-                className="flex w-full items-center justify-between p-4 transition-colors hover:bg-accent"
-              >
-                <div className="text-left">
-                  <p className="font-medium">{language.name}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {language.nativeName}
-                  </p>
-                </div>
-                {selectedLanguage === language.code && (
-                  <Check className="h-5 w-5 text-primary" />
-                )}
-              </button>
-            ))}
+            {languages.map((language) => {
+              const isActive = currentLang === language.code;
+              return (
+                <button
+                  key={language.code}
+                  onClick={() => handleSelectLanguage(language.code)}
+                  className={`flex w-full items-center gap-3 p-4 transition-colors hover:bg-accent ${
+                    isActive ? "bg-accent/50" : ""
+                  }`}
+                >
+                  <span className="text-2xl shrink-0">{language.flag}</span>
+                  <div className="flex-1 text-left">
+                    <p className="font-medium">{language.name}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {language.nativeName}
+                    </p>
+                  </div>
+                  {isActive && (
+                    <Check className="h-5 w-5 text-primary shrink-0" />
+                  )}
+                </button>
+              );
+            })}
           </CardContent>
         </Card>
 

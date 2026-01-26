@@ -1,11 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Calendar, CheckCircle2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { BottomNavigation } from "@/modules/root/components/BottomNavigation";
+import { BottomNavigation } from "@/modules/point/components/BottomNavigation";
 import { RouteConfig } from "@/config/route.config";
 
 // Mock voucher data - replace with real data from API
@@ -33,9 +33,10 @@ const mockVoucher = {
 
 const VoucherDetailViewPage = () => {
   const router = useRouter();
+  const params = useParams<{ orgId: string }>();
 
   const handleBack = () => {
-    router.push(RouteConfig.PRIVILEGE.HISTORY);
+    router.push(RouteConfig.PRIVILEGE.HISTORY(params.orgId));
   };
 
   const handleUseVoucher = () => {

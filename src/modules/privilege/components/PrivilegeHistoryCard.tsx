@@ -36,7 +36,7 @@ export const PrivilegeHistoryCard = ({
   const isUsed = history.status === "used";
 
   const handleClick = () => {
-    router.push(RouteConfig.PRIVILEGE.VOUCHER_DETAIL(history.id));
+    router.push(RouteConfig.PRIVILEGE.VOUCHER_DETAIL(history.id, "history"));
   };
 
   return (

@@ -1,23 +1,17 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { ArrowUpRight, ArrowDownRight, ChevronRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { RouteConfig } from "@/config/route.config";
-
-interface Transaction {
-  id: string;
-  type: "earned" | "spent";
-  amount: number;
-  description: string;
-  date: Date;
-}
+import { IPointTransaction } from "../api/point.api";
+import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 
 interface PointTransactionListProps {
-  transactions: Transaction[];
+  transactions: IPointTransaction[];
 }
 
 const formatDate = (date: Date) => {
@@ -40,30 +34,41 @@ export const PointTransactionList = ({
   transactions,
 }: PointTransactionListProps) => {
   const router = useRouter();
+  const params = useParams<{ orgId: string }>();
+  const { t } = useTranslation("point");
 
   const handleViewAll = () => {
-    router.push(RouteConfig.POINT_HISTORY);
+    router.push(RouteConfig.POINT_HISTORY(params.orgId));
   };
 
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Recent Transactions</h2>
+        <h2 className="text-lg font-semibold">{t("recentTransactions")}</h2>
         <Button
           variant="ghost"
           size="sm"
           onClick={handleViewAll}
           className="text-sm text-muted-foreground hover:text-foreground"
         >
-          View All
+          {t("viewAll")}
           <ChevronRight className="ml-1 h-4 w-4" />
         </Button>
       </div>
 
-      <ScrollArea className="h-100 pr-4">
-        <div className="space-y-2">
-          {transactions.map((transaction) => {
-            const isEarned = transaction.type === "earned";
+      <div className="space-y-2">
+        {transactions.length === 0 ? (
+          <Card>
+            <CardContent className="flex items-center justify-center p-8">
+              <p className="text-sm text-muted-foreground">
+                {t("noTransactionsYet")}
+              </p>
+            </CardContent>
+          </Card>
+        ) : (
+          transactions.map((transaction) => {
+            // txType: 1 = earned, -1 = spent
+            const isEarned = transaction.txType === 1;
             const Icon = isEarned ? ArrowDownRight : ArrowUpRight;
 
             return (
@@ -84,10 +89,13 @@ export const PointTransactionList = ({
 
                   <div className="flex-1 space-y-1">
                     <p className="text-sm font-medium leading-none">
-                      {transaction.description}
+                      {transaction.description ||
+                        (isEarned ? t("pointsEarned") : t("pointsSpent"))}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      {formatDate(transaction.date)}
+                      {dayjs(transaction.createdDate).format(
+                        "DD MMM YYYY HH:mm [GMT] Z"
+                      )}
                     </p>
                   </div>
 
@@ -100,21 +108,21 @@ export const PointTransactionList = ({
                       }`}
                     >
                       {isEarned ? "+" : "-"}
-                      {transaction.amount.toLocaleString()}
+                      {transaction.txAmount.toLocaleString()}
                     </span>
                     <Badge
                       variant={isEarned ? "default" : "secondary"}
                       className="text-xs"
                     >
-                      {isEarned ? "Earned" : "Spent"}
+                      {isEarned ? t("earned") : t("spent")}
                     </Badge>
                   </div>
                 </CardContent>
               </Card>
             );
-          })}
-        </div>
-      </ScrollArea>
+          })
+        )}
+      </div>
     </div>
   );
 };

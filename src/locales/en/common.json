@@ -1,0 +1,25 @@
+{
+  "orgId": "Organization ID",
+  "welcome": "Welcome to Back!",
+  "menu": {
+    "point": "Point",
+    "privilege": "Privilege",
+    "product": "Product",
+    "profile": "Profile"
+  },
+  "comingSoon": {
+    "title": "Coming Soon",
+    "description": "We're working hard to bring you something amazing!",
+    "subDescription": "This feature is under development and will be available soon.",
+    "newFeatures": "New Features",
+    "stayTuned": "Stay Tuned",
+    "inDevelopment": "In Development"
+  },
+  "not-found": {
+    "title": "404 - Page Not Found",
+    "description": "Sorry, the page you are looking for does not exist.",
+    "goBack": "Go Back",
+    "home": "Go to Home",
+    "contactSupport": "If you think this is a bug, please contact support."
+  }
+}

@@ -1,10 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Ticket } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { OrgHeader } from "@/components/org-header";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BottomNavigation } from "@/modules/root/components/BottomNavigation";
+import { BottomNavigation } from "@/modules/point/components/BottomNavigation";
 import { PrivilegeCard } from "../components/PrivilegeCard";
 import { RouteConfig } from "@/config/route.config";
 
@@ -62,6 +63,7 @@ const mockPrivileges = [
 
 const PrivilegeViewPage = () => {
   const router = useRouter();
+  const params = useParams<{ orgId: string }>();
 
   const handleRedeem = (privilegeId: string) => {
     console.log("Redeem privilege:", privilegeId);
@@ -71,11 +73,14 @@ const PrivilegeViewPage = () => {
   };
 
   const handleViewMyVouchers = () => {
-    router.push(RouteConfig.PRIVILEGE.HISTORY);
+    router.push(RouteConfig.PRIVILEGE.HISTORY(params.orgId));
   };
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Organization Header */}
+      <OrgHeader />
+
       {/* Main content with bottom padding for navigation */}
       <main className="mx-auto max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-4xl p-4 sm:p-6 md:p-8 pb-24">
         {/* Header */}

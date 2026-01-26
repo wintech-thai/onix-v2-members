@@ -1,29 +1,28 @@
 export const RouteConfig = {
-  ROOT: "/",
-  POINT_HISTORY: "/point-history",
+  ROOT: (orgId: string) => `/${orgId}/point`,
+  POINT_HISTORY: (orgId: string) => `/${orgId}/point/point-history`,
 
   AUTH: {
     LOGIN: "/auth/login",
     FORGOT_PASSWORD: "/auth/forgot-password",
   },
   PRIVILEGE: {
-    LIST: "/privilege",
-    HISTORY: "/privilege/history",
-    VOUCHER_DETAIL: (id: string) => `/privilege/voucher/${id}`,
+    LIST: (orgId: string) => `/${orgId}/privilege`,
+    HISTORY: (orgId: string) => `/${orgId}/privilege/history`,
+    VOUCHER_DETAIL: (orgId: string, id: string) => `/${orgId}/privilege/voucher/${id}`,
   },
   PRODUCT: {
-    LIST: "/product",
-    HISTORY: "/product/history",
+    LIST: (orgId: string) => `/${orgId}/product`,
+    HISTORY: (orgId: string) => `/${orgId}/product/history`,
   },
   SCAN_ITEMS: {
-    LIST: "/scan-items",
-    HISTORY: "/scan-items/history",
+    LIST: (orgId: string) => `/${orgId}/scan-items`,
+    HISTORY: (orgId: string) => `/${orgId}/scan-items/history`,
   },
   PROFILE: {
-    PROFILE: "/profile",
-    CHANGE_PASSWORD: "/profile/change-password",
-    LANGUAGE: "/profile/language",
-    CONSENT: "/profile/consent",
+    PROFILE: (orgId: string) => `/${orgId}/profile`,
+    CHANGE_PASSWORD: (orgId: string) => `/${orgId}/profile/change-password`,
+    LANGUAGE: (orgId: string) => `/${orgId}/profile/language`,
+    CONSENT: (orgId: string) => `/${orgId}/profile/consent`,
   },
 };
-

@@ -1,0 +1,21 @@
+{
+  "manageYourPoint": "จัดการแต้มและรางวัลของคุณ",
+  "yourPoints": "แต้มของคุณ",
+  "pts": "แต้ม",
+  "availableBalance": "ยอดคงเหลือ",
+  "buyPoints": "ซื้อแต้ม",
+  "recentTransactions": "ธุรกรรมล่าสุด",
+  "viewAll": "ดูทั้งหมด",
+  "noTransactionsYet": "ยังไม่มีธุรกรรม",
+  "pointsEarned": "ได้รับแต้ม",
+  "pointsSpent": "ใช้แต้ม",
+  "earned": "ได้รับ",
+  "spent": "ใช้",
+  "pointTransactionHistory": "ประวัติการใช้แต้ม",
+  "currentBalance": "ยอดคงเหลือปัจจุบัน",
+  "points": "แต้ม",
+  "previous": "ก่อนหน้า",
+  "next": "ถัดไป",
+  "page": "หน้า",
+  "of": "จาก"
+}

@@ -1,10 +1,10 @@
 "use client";
 
 import { ArrowLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BottomNavigation } from "@/modules/root/components/BottomNavigation";
+import { BottomNavigation } from "@/modules/point/components/BottomNavigation";
 import { PurchaseHistoryCard } from "../components/PurchaseHistoryCard";
 import { RouteConfig } from "@/config/route.config";
 
@@ -59,9 +59,10 @@ const mockPurchaseHistory = [
 
 const ProductHistoryViewPage = () => {
   const router = useRouter();
+  const params = useParams<{ orgId: string }>();
 
   const handleBack = () => {
-    router.push(RouteConfig.PRODUCT.LIST);
+    router.push(RouteConfig.PRODUCT.LIST(params.orgId));
   };
 
   return (

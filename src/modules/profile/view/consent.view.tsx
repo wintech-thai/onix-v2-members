@@ -5,14 +5,16 @@ import { ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BottomNavigation } from "@/modules/root/components/BottomNavigation";
+import { BottomNavigation } from "@/modules/point/components/BottomNavigation";
 import { RouteConfig } from "@/config/route.config";
+import { useParams } from "next/navigation";
 
 const ConsentViewPage = () => {
   const router = useRouter();
+  const params = useParams<{ orgId: string }>();
 
   const handleBack = () => {
-    router.push(RouteConfig.PROFILE.PROFILE);
+    router.push(RouteConfig.PROFILE.PROFILE(params.orgId));
   };
 
   return (

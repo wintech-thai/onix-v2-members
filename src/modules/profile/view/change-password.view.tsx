@@ -1,17 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { BottomNavigation } from "@/modules/root/components/BottomNavigation";
+import { BottomNavigation } from "@/modules/point/components/BottomNavigation";
 import { RouteConfig } from "@/config/route.config";
 
 const ChangePasswordViewPage = () => {
   const router = useRouter();
+  const params = useParams<{ orgId: string }>();
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -23,7 +24,7 @@ const ChangePasswordViewPage = () => {
   });
 
   const handleBack = () => {
-    router.push(RouteConfig.PROFILE.PROFILE);
+    router.push(RouteConfig.PROFILE.PROFILE(params.orgId));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
