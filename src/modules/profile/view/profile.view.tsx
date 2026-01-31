@@ -60,11 +60,22 @@ const ProfileInfoItem = ({
   );
 };
 
+import { useConfirm } from "@/hooks/use-confirm";
+import axios from "axios";
+
 const ProfileViewPage = () => {
   const router = useRouter();
   const { t } = useTranslation("profile");
   const params = useParams<{ orgId: string }>();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const [LogoutConfirmationDialog, confirmLogout] = useConfirm({
+    title: t("logoutConfirmation.title"),
+    message: t("logoutConfirmation.description"),
+    variant: "destructive",
+    confirmButton: t("logoutConfirmation.action.confirm"),
+    cancelButton: t("logoutConfirmation.action.cancel"),
+  });
 
   const getCustomerUserInfo = getCustomerUserInfoQuery({
     orgId: params.orgId,
@@ -99,6 +110,9 @@ const ProfileViewPage = () => {
   };
 
   const handleLogout = async () => {
+    const isConfirmed = await confirmLogout();
+    if (!isConfirmed) return;
+
     await logoutUser.mutateAsync(
       {
         params: {
@@ -106,12 +120,20 @@ const ProfileViewPage = () => {
         },
       },
       {
-        onSuccess: ({ data }) => {
+        onSuccess: async ({ data }) => {
           if (data.status !== "SUCCESS" && data.status !== "OK") {
-            toast.error(data.message);
+            toast.error(t("logoutConfirmation.message.logoutError"));
+            return;
           }
-          toast.success(data.status);
-          // router.push(RouteConfig.HOME(params.orgId));
+
+          await axios.post("/api/auth/logout");
+          toast.success(t("logoutConfirmation.message.logoutSuccess"));
+
+          router.push(RouteConfig.AUTH.LOGIN(params.orgId));
+        },
+        onError: (error) => {
+          console.error(error);
+          toast.error(t("logoutConfirmation.message.logoutError"));
         },
       }
     );
@@ -292,6 +314,7 @@ const ProfileViewPage = () => {
         </Button>
       </main>
 
+      <LogoutConfirmationDialog />
       {/* Bottom Navigation */}
       <BottomNavigation />
 

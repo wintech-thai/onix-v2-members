@@ -7,6 +7,10 @@
     "product": "Product",
     "profile": "Profile"
   },
+  "button": {
+    "ok": "OK",
+    "cancel": "Cancel"
+  },
   "comingSoon": {
     "title": "Coming Soon",
     "description": "We're working hard to bring you something amazing!",

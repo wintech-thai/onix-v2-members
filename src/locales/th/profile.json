@@ -98,6 +98,18 @@
       "save": "บันทึกการเปลี่ยนแปลง"
     }
   },
+  "logoutConfirmation": {
+    "title": "ออกจากระบบ",
+    "description": "คุณแน่ใจหรือไม่ว่าต้องการออกจากระบบ?",
+    "message": {
+      "logoutSuccess": "ออกจากระบบสำเร็จ",
+      "logoutError": "เกิดข้อผิดพลาดในการออกจากระบบ"
+    },
+    "action": {
+      "confirm": "ออกจากระบบ",
+      "cancel": "ยกเลิก"
+    }
+  },
   "footer": {
     "copyright": "© {{year}} Dev Hub Co., Ltd. สงวนลิขสิทธิ์"
   }

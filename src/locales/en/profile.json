@@ -98,6 +98,18 @@
       "save": "Save Changes"
     }
   },
+  "logoutConfirmation": {
+    "title": "Logout",
+    "description": "Are you sure you want to logout?",
+    "message": {
+      "logoutSuccess": "Logout successfully",
+      "logoutError": "Failed to logout"
+    },
+    "action": {
+      "confirm": "Logout",
+      "cancel": "Cancel"
+    }
+  },
   "footer": {
     "copyright": "© {{year}} Dev Hub Co., Ltd. All rights reserved."
   }

@@ -3,8 +3,8 @@ export const RouteConfig = {
   POINT_HISTORY: (orgId: string) => `/${orgId}/point/point-history`,
 
   AUTH: {
-    LOGIN: "/auth/login",
-    FORGOT_PASSWORD: "/auth/forgot-password",
+    LOGIN: (orgId: string) => `/${orgId}/auth/sign-in`,
+    FORGOT_PASSWORD: (orgId: string) => `/${orgId}/auth/forgot-password`,
   },
   PRIVILEGE: {
     LIST: (orgId: string) => `/${orgId}/privilege`,

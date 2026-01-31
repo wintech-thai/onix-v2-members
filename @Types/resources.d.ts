@@ -18,6 +18,10 @@ interface Resources {
     }
   },
   "common": {
+    "button": {
+      "cancel": "Cancel",
+      "ok": "OK"
+    },
     "comingSoon": {
       "description": "We're working hard to bring you something amazing!",
       "inDevelopment": "In Development",
@@ -142,6 +146,18 @@ interface Resources {
       },
       "subtitle": "Choose your preferred language",
       "title": "Language"
+    },
+    "logoutConfirmation": {
+      "action": {
+        "cancel": "Cancel",
+        "confirm": "Logout"
+      },
+      "description": "Are you sure you want to logout?",
+      "message": {
+        "logoutError": "Failed to logout",
+        "logoutSuccess": "Logout successfully"
+      },
+      "title": "Logout"
     },
     "section": {
       "app_info": "APP INFO",
