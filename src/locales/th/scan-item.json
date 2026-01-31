@@ -1,0 +1,38 @@
+{
+  "title": "สแกนสินค้า",
+  "description": "จัดการและดูรายละเอียดการสแกนสินค้าของคุณ",
+  "columns": {
+    "serial": "ซีเรียล",
+    "pin": "รหัสพิน",
+    "product-code": "สินค้า",
+    "status": "สถานะ",
+    "created": "วันที่สร้าง"
+  },
+  "status": {
+    "registered": "ลงทะเบียนแล้ว",
+    "pending": "รอลงทะเบียน",
+    "scanned": "สแกนแล้ว: {{count}}",
+    "not-registered": "ยังไม่ลงทะเบียน"
+  },
+  "details": {
+    "title": "รายละเอียดสินค้า",
+    "sequence-no": "ลำดับ",
+    "run-id": "Run ID"
+  },
+  "timestamps": {
+    "title": "เวลา",
+    "created": "วันที่สร้าง",
+    "registered": "วันที่ลงทะเบียน"
+  },
+  "attributes": {
+    "title": "คุณลักษณะ",
+    "box-group": "กล่อง / กลุ่ม",
+    "url": "ลิงก์"
+  },
+  "pagination": {
+    "showing": "แสดง {{start}} ถึง {{end}} จาก {{total}} รายการ",
+    "previous": "ก่อนหน้า",
+    "next": "ถัดไป",
+    "page": "หน้า {{current}} จาก {{total}}"
+  }
+}

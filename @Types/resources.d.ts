@@ -34,7 +34,8 @@ interface Resources {
       "point": "Point",
       "privilege": "Privilege",
       "product": "Product",
-      "profile": "Profile"
+      "profile": "Profile",
+      "scan-items": "Scan Items"
     },
     "not-found": {
       "contactSupport": "If you think this is a bug, please contact support.",
@@ -182,6 +183,44 @@ interface Resources {
       }
     },
     "title": "Profile"
+  },
+  "scan-item": {
+    "attributes": {
+      "box-group": "Box / Group",
+      "title": "Attributes",
+      "url": "URL"
+    },
+    "columns": {
+      "created": "Created",
+      "pin": "Pin",
+      "product-code": "Product",
+      "serial": "Serial",
+      "status": "Status"
+    },
+    "description": "Manage and view your scan items details.",
+    "details": {
+      "run-id": "Run ID",
+      "sequence-no": "Sequence No",
+      "title": "Item Details"
+    },
+    "pagination": {
+      "next": "Next",
+      "page": "Page {{current}} of {{total}}",
+      "previous": "Previous",
+      "showing": "Showing {{start}} to {{end}} of {{total}} entries"
+    },
+    "status": {
+      "not-registered": "Not Registered",
+      "pending": "Pending",
+      "registered": "Registered",
+      "scanned": "Scanned: {{count}}"
+    },
+    "timestamps": {
+      "created": "Created",
+      "registered": "Registered",
+      "title": "Timestamps"
+    },
+    "title": "Scan Items"
   }
 }
 

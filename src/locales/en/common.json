@@ -5,7 +5,8 @@
     "point": "Point",
     "privilege": "Privilege",
     "product": "Product",
-    "profile": "Profile"
+    "profile": "Profile",
+    "scan-items": "Scan Items"
   },
   "button": {
     "ok": "OK",

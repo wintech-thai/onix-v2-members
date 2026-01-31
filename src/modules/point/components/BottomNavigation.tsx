@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { Home, Gift, ShoppingBag, User } from "lucide-react";
+import { Home, Gift, ShoppingBag, User, ScanBarcode } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RouteConfig } from "@/config/route.config";
 import { useTranslation } from "react-i18next";
@@ -21,6 +21,11 @@ export const BottomNavigation = () => {
       label: t("menu.point"),
       icon: Home,
       path: RouteConfig.ROOT(params.orgId),
+    },
+    {
+      label: t("menu.scan-items"),
+      icon: ScanBarcode,
+      path: RouteConfig.SCAN_ITEMS.LIST(params.orgId),
     },
     {
       label: t("menu.privilege"),
