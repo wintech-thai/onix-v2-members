@@ -21,6 +21,7 @@ export const RouteConfig = {
   },
   PROFILE: {
     PROFILE: (orgId: string) => `/${orgId}/profile`,
+    UPDATE_USER_INFO: (orgId: string) => `/${orgId}/profile/update-user-info`,
     CHANGE_PASSWORD: (orgId: string) => `/${orgId}/profile/change-password`,
     LANGUAGE: (orgId: string) => `/${orgId}/profile/language`,
     CONSENT: (orgId: string) => `/${orgId}/profile/consent`,

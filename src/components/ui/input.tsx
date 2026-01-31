@@ -53,7 +53,7 @@ function Input({
           role="alert"
           aria-live="polite"
         >
-          {errorMessageAsLangKey(errorMessage, t)}
+          {t ? errorMessageAsLangKey(errorMessage, t) : errorMessage}
         </p>
       )}
 
@@ -69,5 +69,15 @@ function Input({
     </div>
   );
 }
+
+type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  label?: string;
+  isRequired?: boolean;
+  helperText?: string;
+  errorMessage?: string;
+  startContent?: React.ReactNode;
+  endContent?: React.ReactNode;
+  floatingLabel?: boolean;
+};
 
 export { Input };

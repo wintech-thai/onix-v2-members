@@ -8,6 +8,7 @@ import { BottomNavigation } from "@/modules/point/components/BottomNavigation";
 import { RouteConfig } from "@/config/route.config";
 import { useTranslation } from "react-i18next";
 import Cookie from "js-cookie";
+import { useState, useEffect } from "react";
 
 const languages = [
   { code: "th", name: "ภาษาไทย", nativeName: "Thai", flag: "🇹🇭" },
@@ -17,16 +18,25 @@ const languages = [
 const LanguageSettingsViewPage = () => {
   const router = useRouter();
   const params = useParams<{ orgId: string }>();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation("profile");
   const currentLang = Cookie.get("i18next") || "en";
+  const [client, setClient] = useState(false);
+  const [lang, setLang] = useState(currentLang);
+
+  useEffect(() => {
+    setClient(true);
+  }, []);
+
+  if (!client) return null;
 
   const handleBack = () => {
+    i18n.changeLanguage(lang);
+    Cookie.set("i18next", lang, { expires: 365 });
     router.push(RouteConfig.PROFILE.PROFILE(params.orgId));
   };
 
   const handleSelectLanguage = (langCode: string) => {
-    i18n.changeLanguage(langCode);
-    Cookie.set("i18next", langCode, { expires: 365 });
+    setLang(langCode);
   };
 
   return (
@@ -43,9 +53,11 @@ const LanguageSettingsViewPage = () => {
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div>
-            <h1 className="text-2xl font-bold">Language</h1>
+            <h1 className="text-2xl font-bold">
+              {t("languageSettings.title")}
+            </h1>
             <p className="text-sm text-muted-foreground">
-              Choose your preferred language
+              {t("languageSettings.subtitle")}
             </p>
           </div>
         </div>
@@ -53,7 +65,7 @@ const LanguageSettingsViewPage = () => {
         <Card>
           <CardContent className="divide-y p-0">
             {languages.map((language) => {
-              const isActive = currentLang === language.code;
+              const isActive = lang === language.code;
               return (
                 <button
                   key={language.code}
@@ -80,7 +92,7 @@ const LanguageSettingsViewPage = () => {
 
         <div className="mt-6">
           <Button onClick={handleBack} className="w-full">
-            Save Changes
+            {t("languageSettings.action.save")}
           </Button>
         </div>
       </main>

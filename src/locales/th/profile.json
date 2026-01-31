@@ -1,0 +1,104 @@
+{
+  "title": "โปรไฟล์",
+  "description": "จัดการการตั้งค่าบัญชีของคุณ",
+  "action": {
+    "logout": "ออกจากระบบ",
+    "edit": "แก้ไข"
+  },
+  "section": {
+    "personal_information": "ข้อมูลส่วนตัว",
+    "settings": "การตั้งค่า",
+    "app_info": "ข้อมูลแอปพลิเคชัน"
+  },
+  "label": {
+    "name": "ชื่อ",
+    "lastName": "นามสกุล",
+    "email": "อีเมล",
+    "phoneNumber": "เบอร์โทรศัพท์",
+    "birthDate": "วันเกิด",
+    "version": "เวอร์ชัน: "
+  },
+  "settings": {
+    "changePassword": {
+      "title": "เปลี่ยนรหัสผ่าน",
+      "description": "อัปเดตรหัสผ่านบัญชีของคุณ"
+    },
+    "language": {
+      "title": "ภาษา",
+      "description": "เปลี่ยนภาษาบัญชีของคุณ"
+    },
+    "Theme": {
+      "title": "ธีม"
+    },
+    "appInfo": {
+      "title": "ข้อมูลแอป",
+      "version": "เวอร์ชันแอป"
+    }
+  },
+  "changePassword": {
+    "title": "เปลี่ยนรหัสผ่าน",
+    "subtitle": "อัปเดตรหัสผ่านบัญชีของคุณ",
+    "requirements": {
+      "title": "ข้อกำหนดรหัสผ่าน",
+      "description": "รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร และประกอบด้วยตัวพิมพ์ใหญ่ ตัวพิมพ์เล็ก ตัวเลข และอักขระพิเศษ"
+    },
+    "form": {
+      "currentPassword": "รหัสผ่านปัจจุบัน",
+      "newPassword": "รหัสผ่านใหม่",
+      "confirmPassword": "ยืนยันรหัสผ่านใหม่",
+      "action": {
+        "cancel": "ยกเลิก",
+        "update": "อัปเดตรหัสผ่าน",
+        "updating": "กำลังอัปเดต..."
+      },
+      "message": {
+        "updateSuccess": "อัปเดตรหัสผ่านสำเร็จ",
+        "updateError": "เกิดข้อผิดพลาดในการอัปเดตรหัสผ่าน"
+      },
+      "validation": {
+        "currentPasswordIsRequired": "กรุณากรอกรหัสผ่านปัจจุบัน",
+        "newPasswordIsRequired": "กรุณากรอกรหัสผ่านใหม่",
+        "confirmPasswordIsRequired": "กรุณายืนยันรหัสผ่านใหม่",
+        "passwordsDoNotMatch": "รหัสผ่านไม่ตรงกัน",
+        "passwordMustBeAtLeast8Characters": "รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร",
+        "passwordMustContainUppercase": "รหัสผ่านต้องมีตัวพิมพ์ใหญ่อย่างน้อย 1 ตัว",
+        "passwordMustContainLowercase": "รหัสผ่านต้องมีตัวพิมพ์เล็กอย่างน้อย 1 ตัว",
+        "passwordMustContainNumber": "รหัสผ่านต้องมีตัวเลขอย่างน้อย 1 ตัว",
+        "passwordMustContainSpecialCharacter": "รหัสผ่านต้องมีอักขระพิเศษอย่างน้อย 1 ตัว"
+      }
+    }
+  },
+  "editProfile": {
+    "title": "แก้ไขโปรไฟล์",
+    "description": "แก้ไขข้อมูลโปรไฟล์ของคุณที่นี่ คลิกบันทึกเมื่อเสร็จสิ้น",
+    "messages": {
+      "updateSuccess": "อัปเดตข้อมูลโปรไฟล์สำเร็จ",
+      "updateError": "เกิดข้อผิดพลาดในการอัปเดตข้อมูลโปรไฟล์"
+    },
+    "form": {
+      "firstName": "ชื่อจริง",
+      "lastName": "นามสกุล",
+      "phoneNumber": "เบอร์โทรศัพท์",
+      "validation": {
+        "firstNameIsRequired": "กรุณากรอกชื่อจริง",
+        "lastNameIsRequired": "กรุณากรอกนามสกุล",
+        "phoneNumberIsRequired": "กรุณากรอกเบอร์โทรศัพท์",
+        "phoneNumberInvalid": "รูปแบบเบอร์โทรศัพท์ไม่ถูกต้อง (ต้องเป็น E.164 เช่น +66812345678)"
+      },
+      "action": {
+        "save": "บันทึกการเปลี่ยนแปลง",
+        "saving": "กำลังบันทึก..."
+      }
+    }
+  },
+  "languageSettings": {
+    "title": "ภาษา",
+    "subtitle": "เลือกภาษาที่คุณต้องการ",
+    "action": {
+      "save": "บันทึกการเปลี่ยนแปลง"
+    }
+  },
+  "footer": {
+    "copyright": "© {{year}} Dev Hub Co., Ltd. สงวนลิขสิทธิ์"
+  }
+}

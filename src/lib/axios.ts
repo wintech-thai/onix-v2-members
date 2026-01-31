@@ -115,7 +115,7 @@ api.interceptors.response.use(
     }
 
     // กรณีอื่นๆ ที่ไม่ใช่ 401
-    if (status !== 401) {
+    if (status === 500) {
       const pathSegments = window.location.pathname.split('/').filter(Boolean);
       const orgId = pathSegments[0];
 

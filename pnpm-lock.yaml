@@ -54,6 +54,9 @@ importers:
       framer-motion:
         specifier: ^12.29.0
         version: 12.29.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      google-libphonenumber:
+        specifier: ^3.2.44
+        version: 3.2.44
       html5-qrcode:
         specifier: ^2.3.8
         version: 2.3.8
@@ -118,6 +121,9 @@ importers:
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.1.18
+      '@types/google-libphonenumber':
+        specifier: ^7.4.30
+        version: 7.4.30
       '@types/js-cookie':
         specifier: ^3.0.6
         version: 3.0.6
@@ -1140,6 +1146,9 @@ packages:
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
+  '@types/google-libphonenumber@7.4.30':
+    resolution: {integrity: sha512-Td1X1ayRxePEm6/jPHUBs2tT6TzW1lrVB6ZX7ViPGellyzO/0xMNi+wx5nH6jEitjznq276VGIqjK5qAju0XVw==}
+
   '@types/js-cookie@3.0.6':
     resolution: {integrity: sha512-wkw9yd1kEXOPnvEeEV1Go1MmxtBJL0RR79aOTAApecWFVu7w0NNXNqhcWgvw2YgZDYadliXkl14pa3WXw5jlCQ==}
 
@@ -1852,6 +1861,10 @@ packages:
   globalthis@1.0.4:
     resolution: {integrity: sha512-DpLKbNU4WylpxJykQujfCcwYWiV/Jhm50Goo0wrVILAv5jOr9d+H+UR3PhSCD2rCCEIg0uc+G+muBTwD54JhDQ==}
     engines: {node: '>= 0.4'}
+
+  google-libphonenumber@3.2.44:
+    resolution: {integrity: sha512-9p2TghluF2LTChFMLWsDRD5N78SZDsILdUk4gyqYxBXluCyxoPiOq+Fqt7DKM+LUd33+OgRkdrc+cPR93AypCQ==}
+    engines: {node: '>=0.10'}
 
   gopd@1.2.0:
     resolution: {integrity: sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==}
@@ -3725,6 +3738,8 @@ snapshots:
 
   '@types/estree@1.0.8': {}
 
+  '@types/google-libphonenumber@7.4.30': {}
+
   '@types/js-cookie@3.0.6': {}
 
   '@types/json-schema@7.0.15': {}
@@ -4609,6 +4624,8 @@ snapshots:
     dependencies:
       define-properties: 1.2.1
       gopd: 1.2.0
+
+  google-libphonenumber@3.2.44: {}
 
   gopd@1.2.0: {}
 
