@@ -32,3 +32,4 @@ ENV HOSTNAME=0.0.0.0
 EXPOSE 5678
 
 CMD ["node", "server.js"]
+
