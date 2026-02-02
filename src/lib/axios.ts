@@ -2,6 +2,8 @@
 
 import axios from "axios";
 import { env } from "next-runtime-env";
+import Cookies from "js-cookie";
+import { COOKIE_NAMES } from "@/config/auth.config";
 
 export const apiClient = axios.create({
   baseURL: env("NEXT_PUBLIC_API_URL"),
@@ -45,9 +47,7 @@ function processQueue(error: any = null) {
 }
 
 async function refreshToken(): Promise<void> {
-  // Extract orgId from current URL path (e.g., /pjame16/point -> pjame16)
-  const pathSegments = window.location.pathname.split('/').filter(Boolean);
-  const orgId = pathSegments[0]; // First segment is orgId
+  const orgId = Cookies.get(COOKIE_NAMES.ORG_ID);
 
   if (!orgId) {
     throw new Error("No orgId found in URL");
@@ -100,10 +100,7 @@ api.interceptors.response.use(
       } catch (refreshError) {
         isRefreshing = false;
         processQueue(refreshError);
-
-        // Refresh ล้มเหลว -> redirect ไป login
-        const pathSegments = window.location.pathname.split('/').filter(Boolean);
-        const orgId = pathSegments[0];
+        const orgId = Cookies.get(COOKIE_NAMES.ORG_ID);
 
         if (!orgId) {
           window.location.href = '/';
@@ -112,12 +109,21 @@ api.interceptors.response.use(
         }
         return Promise.reject(refreshError);
       }
+    } else if (status === 401 && originalRequest._retry) {
+      // 401 again after retry -> force logout
+      const orgId = Cookies.get(COOKIE_NAMES.ORG_ID);
+
+      if (!orgId) {
+        window.location.href = "/";
+      } else {
+        window.location.href = `/${orgId}/auth/sign-in`;
+      }
+      return Promise.reject(err);
     }
 
     // กรณีอื่นๆ ที่ไม่ใช่ 401
     if (status === 500) {
-      const pathSegments = window.location.pathname.split('/').filter(Boolean);
-      const orgId = pathSegments[0];
+      const orgId = Cookies.get(COOKIE_NAMES.ORG_ID);
 
       if (!orgId) {
         window.location.href = '/';

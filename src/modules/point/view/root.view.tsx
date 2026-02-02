@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
-import { PointPageSkeleton } from "../components/PointPageSkeleton";
+import {
+  PointCardSkeleton,
+  TransactionListSkeleton,
+} from "../components/PointPageSkeleton";
 import {
   useGetPointTransactionQuery,
   useGetWalletQuery,
@@ -15,6 +18,7 @@ import { PointCard } from "../components/PointCard";
 import { PointTransactionList } from "../components/PointTransactionList";
 import { useTranslation } from "react-i18next";
 import { ResponsiveConfirmation } from "@/components/ui/responsive-confirmation";
+import { LoadingBackdrop } from "@/components/ui/loading-backdrop";
 
 const RootViewPage = () => {
   const params = useParams<{ orgId: string }>();
@@ -28,8 +32,7 @@ const RootViewPage = () => {
     },
     null,
     {
-      refetchOnWindowFocus: true,
-      gcTime: 0,
+      // refetchOnWindowFocus: true,
       staleTime: 0,
     }
   );
@@ -39,8 +42,7 @@ const RootViewPage = () => {
     },
     null,
     {
-      refetchOnWindowFocus: true,
-      gcTime: 0,
+      // refetchOnWindowFocus: true,
       staleTime: 0,
     }
   );
@@ -75,14 +77,11 @@ const RootViewPage = () => {
     }
   };
 
-  if (getWallet.isLoading || getPointTransaction.isLoading) {
-    return <PointPageSkeleton />;
-  }
-
+  const isLoading = getWallet.isLoading || getPointTransaction.isLoading;
   const walletPayload = getWallet.data?.data.wallet;
   const transactions = (getPointTransaction.data?.data || []).slice(0, 6);
 
-  if (!walletPayload) {
+  if (!isLoading && !walletPayload) {
     throw new Error(getWallet.data?.data.description);
   }
 
@@ -131,13 +130,21 @@ const RootViewPage = () => {
           </div>
 
           {/* Point Card */}
-          <PointCard
-            points={walletPayload.pointBalance ?? 0}
-            onBuyPoints={handleBuyPoints}
-          />
+          {isLoading ? (
+            <PointCardSkeleton />
+          ) : (
+            <PointCard
+              points={walletPayload?.pointBalance ?? 0}
+              onBuyPoints={handleBuyPoints}
+            />
+          )}
 
           {/* Transaction List */}
-          <PointTransactionList transactions={transactions} />
+          {isLoading ? (
+            <TransactionListSkeleton />
+          ) : (
+            <PointTransactionList transactions={transactions} />
+          )}
         </main>
 
         {/* QR Scanner Dialog */}
@@ -159,6 +166,9 @@ const RootViewPage = () => {
           onConfirm={handleConfirmNav}
           onCancel={() => setScannedUrl(null)}
         />
+
+        {/* Loading Backdrop for background refreshes */}
+        <LoadingBackdrop show={!isLoading && isRefreshing} />
       </div>
     </OrgLayout>
   );
