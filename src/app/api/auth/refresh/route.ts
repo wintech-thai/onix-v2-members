@@ -39,7 +39,6 @@ export async function POST(req: Request) {
       // RT หมดอายุ - ลบ cookies
       cookiesStore.delete(COOKIE_NAMES.ACCESS_TOKEN);
       cookiesStore.delete(COOKIE_NAMES.REFRESH_TOKEN);
-      cookiesStore.delete(COOKIE_NAMES.ORG_ID);
       return NextResponse.json(
         { error: "Refresh token expired" },
         { status: 401 }
@@ -92,7 +91,7 @@ export async function POST(req: Request) {
       name: COOKIE_NAMES.ORG_ID,
       value: String(orgId),
       ...COOKIE_OPTIONS,
-      maxAge: TOKEN_EXPIRY.REFRESH_TOKEN_SECONDS,
+      maxAge: TOKEN_EXPIRY.ORG_ID_EXPIRY_SECONDS,
     });
 
     return NextResponse.json({ success: true });

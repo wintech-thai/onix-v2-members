@@ -30,6 +30,13 @@ interface Resources {
       "subDescription": "This feature is under development and will be available soon.",
       "title": "Coming Soon"
     },
+    "dialog": {
+      "openLink": {
+        "confirm": "Open",
+        "message": "Do you want to open this link: {{url}}",
+        "title": "Open Link"
+      }
+    },
     "menu": {
       "point": "Point",
       "privilege": "Privilege",

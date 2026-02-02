@@ -14,6 +14,7 @@ export const COOKIE_NAMES = {
 export const TOKEN_EXPIRY = {
   DEFAULT_ACCESS_TOKEN_SECONDS: 14 * 60, // 5 minutes in seconds (fallback if API doesn't provide)
   REFRESH_TOKEN_SECONDS: 60 * 24 * 60 * 60, // 60 days in seconds
+  ORG_ID_EXPIRY_SECONDS: 60 * 60 * 24 * 365, // 1 year in seconds
 } as const;
 
 // Cookie options

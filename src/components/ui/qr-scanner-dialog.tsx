@@ -41,14 +41,19 @@ export const QRScannerDialog = ({
 
       // Initialize scanner if not already done
       if (!scannerRef.current) {
-        scannerRef.current = new Html5Qrcode(qrCodeRegionId);
+        scannerRef.current = new Html5Qrcode(qrCodeRegionId, {
+          experimentalFeatures: {
+            useBarCodeDetectorIfSupported: true,
+          },
+          verbose: false,
+        });
       }
 
       // Start scanning
       await scannerRef.current.start(
         { facingMode: "environment" }, // Use back camera
         {
-          fps: 10, // Frames per second
+          fps: 15, // Frames per second
           qrbox: { width: 250, height: 250 }, // Scanning box size
         },
         (decodedText) => {

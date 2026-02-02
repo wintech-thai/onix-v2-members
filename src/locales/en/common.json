@@ -26,5 +26,12 @@
     "goBack": "Go Back",
     "home": "Go to Home",
     "contactSupport": "If you think this is a bug, please contact support."
+  },
+  "dialog": {
+    "openLink": {
+      "title": "Open Link",
+      "message": "Do you want to open this link: {{url}}",
+      "confirm": "Open"
+    }
   }
 }

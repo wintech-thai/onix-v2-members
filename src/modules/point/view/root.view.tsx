@@ -7,7 +7,6 @@ import {
   useGetPointTransactionQuery,
   useGetWalletQuery,
 } from "../hooks/point-api.hooks";
-import { toast } from "sonner";
 import { OrgLayout } from "@/components/layout/org-layout";
 import { Button } from "@/components/ui/button";
 import { QRScannerDialog } from "@/components/ui/qr-scanner-dialog";
@@ -15,11 +14,13 @@ import { RefreshCw, QrCode } from "lucide-react";
 import { PointCard } from "../components/PointCard";
 import { PointTransactionList } from "../components/PointTransactionList";
 import { useTranslation } from "react-i18next";
+import { ResponsiveConfirmation } from "@/components/ui/responsive-confirmation";
 
 const RootViewPage = () => {
   const params = useParams<{ orgId: string }>();
   const { t } = useTranslation(["point", "common"]);
   const [isScannerOpen, setIsScannerOpen] = useState(false);
+  const [scannedUrl, setScannedUrl] = useState<string | null>(null);
 
   const getWallet = useGetWalletQuery(
     {
@@ -59,11 +60,19 @@ const RootViewPage = () => {
   };
 
   const handleQRScanSuccess = (decodedText: string) => {
-    console.log("QR Code scanned:", decodedText);
-    toast.success("QR Code Scanned!", {
-      description: `Code: ${decodedText}`,
-    });
-    // TODO: Process QR code data (e.g., earn points, redeem rewards)
+    const url = decodedText.startsWith("http")
+      ? decodedText
+      : `https://${decodedText}`;
+
+    setScannedUrl(url);
+    setIsScannerOpen(false);
+  };
+
+  const handleConfirmNav = () => {
+    if (scannedUrl) {
+      window.open(scannedUrl, "_blank", "noopener,noreferrer");
+      setScannedUrl(null);
+    }
   };
 
   if (getWallet.isLoading || getPointTransaction.isLoading) {
@@ -136,6 +145,19 @@ const RootViewPage = () => {
           open={isScannerOpen}
           onOpenChange={setIsScannerOpen}
           onScanSuccess={handleQRScanSuccess}
+        />
+
+        {/* Confirmation Dialog for opening URL */}
+        <ResponsiveConfirmation
+          open={!!scannedUrl}
+          onOpenChange={(open) => !open && setScannedUrl(null)}
+          title={t("common:dialog.openLink.title")}
+          message={t("common:dialog.openLink.message", { url: scannedUrl })}
+          variant="default"
+          confirmButton={t("common:dialog.openLink.confirm")}
+          cancelButton={t("common:button.cancel")}
+          onConfirm={handleConfirmNav}
+          onCancel={() => setScannedUrl(null)}
         />
       </div>
     </OrgLayout>
