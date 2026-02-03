@@ -1,0 +1,116 @@
+{
+  "title": "Profile",
+  "description": "Manage your account settings",
+  "action": {
+    "logout": "Logout",
+    "edit": "Edit"
+  },
+  "section": {
+    "personal_information": "PERSONAL INFORMATION",
+    "settings": "SETTINGS",
+    "app_info": "APP INFO"
+  },
+  "label": {
+    "name": "Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phoneNumber": "Phone Number",
+    "birthDate": "Birth Date",
+    "version": "versions: "
+  },
+  "settings": {
+    "changePassword": {
+      "title": "Change Password",
+      "description": "Update your account password"
+    },
+    "language": {
+      "title": "Language",
+      "description": "Change your account language"
+    },
+    "Theme": {
+      "title": "Theme"
+    },
+    "appInfo": {
+      "title": "App Info",
+      "version": "App Version"
+    }
+  },
+  "changePassword": {
+    "title": "Change Password",
+    "subtitle": "Update your account password",
+    "requirements": {
+      "title": "Password Requirements",
+      "description": "Password must be at least 8 characters long and contain uppercase, lowercase, number, and special character."
+    },
+    "form": {
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm New Password",
+      "action": {
+        "cancel": "Cancel",
+        "update": "Update Password",
+        "updating": "Updating..."
+      },
+      "message": {
+        "updateSuccess": "Password updated successfully",
+        "updateError": "Failed to update password"
+      },
+      "validation": {
+        "currentPasswordIsRequired": "Current password is required",
+        "newPasswordIsRequired": "New password is required",
+        "confirmPasswordIsRequired": "Confirm password is required",
+        "passwordsDoNotMatch": "Passwords do not match",
+        "passwordMustBeAtLeast8Characters": "Password must be at least 8 characters",
+        "passwordMustContainUppercase": "Password must contain at least one uppercase letter",
+        "passwordMustContainLowercase": "Password must contain at least one lowercase letter",
+        "passwordMustContainNumber": "Password must contain at least one number",
+        "passwordMustContainSpecialCharacter": "Password must contain at least one special character"
+      }
+    }
+  },
+  "editProfile": {
+    "title": "Edit Profile",
+    "description": "Make changes to your profile here. Click save when you're done.",
+    "messages": {
+      "updateSuccess": "Profile updated successfully",
+      "updateError": "Failed to update profile"
+    },
+    "form": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "phoneNumber": "Phone Number",
+      "validation": {
+        "firstNameIsRequired": "First name is required",
+        "lastNameIsRequired": "Last name is required",
+        "phoneNumberIsRequired": "Phone number is required",
+        "phoneNumberInvalid": "Incorrect phone format (must be E.164, e.g. +66812345678)"
+      },
+      "action": {
+        "save": "Save changes",
+        "saving": "Saving..."
+      }
+    }
+  },
+  "languageSettings": {
+    "title": "Language",
+    "subtitle": "Choose your preferred language",
+    "action": {
+      "save": "Save Changes"
+    }
+  },
+  "logoutConfirmation": {
+    "title": "Logout",
+    "description": "Are you sure you want to logout?",
+    "message": {
+      "logoutSuccess": "Logout successfully",
+      "logoutError": "Failed to logout"
+    },
+    "action": {
+      "confirm": "Logout",
+      "cancel": "Cancel"
+    }
+  },
+  "footer": {
+    "copyright": "© {{year}} Dev Hub Co., Ltd. All rights reserved."
+  }
+}

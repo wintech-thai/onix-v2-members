@@ -5,7 +5,12 @@
     "point": "Point",
     "privilege": "Privilege",
     "product": "Product",
-    "profile": "Profile"
+    "profile": "Profile",
+    "scan-items": "Scan Items"
+  },
+  "button": {
+    "ok": "OK",
+    "cancel": "Cancel"
   },
   "comingSoon": {
     "title": "Coming Soon",
@@ -21,5 +26,12 @@
     "goBack": "Go Back",
     "home": "Go to Home",
     "contactSupport": "If you think this is a bug, please contact support."
+  },
+  "dialog": {
+    "openLink": {
+      "title": "Open Link",
+      "message": "Do you want to open this link: {{url}}",
+      "confirm": "Open"
+    }
   }
 }

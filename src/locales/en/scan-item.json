@@ -1,0 +1,38 @@
+{
+  "title": "Scan Items",
+  "description": "Manage and view your scan items details.",
+  "columns": {
+    "serial": "Serial",
+    "pin": "Pin",
+    "product-code": "Product",
+    "status": "Status",
+    "created": "Created"
+  },
+  "status": {
+    "registered": "Registered",
+    "pending": "Pending",
+    "scanned": "Scanned: {{count}}",
+    "not-registered": "Not Registered"
+  },
+  "details": {
+    "title": "Item Details",
+    "sequence-no": "Sequence No",
+    "run-id": "Run ID"
+  },
+  "timestamps": {
+    "title": "Timestamps",
+    "created": "Created",
+    "registered": "Registered"
+  },
+  "attributes": {
+    "title": "Attributes",
+    "box-group": "Box / Group",
+    "url": "URL"
+  },
+  "pagination": {
+    "showing": "Showing {{start}} to {{end}} of {{total}} entries",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {{current}} of {{total}}"
+  }
+}

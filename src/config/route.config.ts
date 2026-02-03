@@ -3,8 +3,8 @@ export const RouteConfig = {
   POINT_HISTORY: (orgId: string) => `/${orgId}/point/point-history`,
 
   AUTH: {
-    LOGIN: "/auth/login",
-    FORGOT_PASSWORD: "/auth/forgot-password",
+    LOGIN: (orgId: string) => `/${orgId}/auth/sign-in`,
+    FORGOT_PASSWORD: (orgId: string) => `/${orgId}/auth/forgot-password`,
   },
   PRIVILEGE: {
     LIST: (orgId: string) => `/${orgId}/privilege`,
@@ -21,6 +21,7 @@ export const RouteConfig = {
   },
   PROFILE: {
     PROFILE: (orgId: string) => `/${orgId}/profile`,
+    UPDATE_USER_INFO: (orgId: string) => `/${orgId}/profile/update-user-info`,
     CHANGE_PASSWORD: (orgId: string) => `/${orgId}/profile/change-password`,
     LANGUAGE: (orgId: string) => `/${orgId}/profile/language`,
     CONSENT: (orgId: string) => `/${orgId}/profile/consent`,
