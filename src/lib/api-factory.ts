@@ -38,7 +38,7 @@ export function createQueryService<TResponse, TBody, TParams>(config: {
 export function createMutationService<TResponse, TRequest, TParams>(config: {
   apiName: string;
   url: string | ((params: TParams) => string);
-  method?: "post" | "put" | "patch" | "delete";
+  method?: "post" | "put" | "patch" | "delete" | "get";
   axiosOptions?: AxiosRequestConfig;
   proxy?: boolean;
 }) {

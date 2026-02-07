@@ -27,6 +27,8 @@ interface ResponsiveConfirmationProps {
   cancelButton?: string;
   onConfirm: () => void;
   onCancel: () => void;
+  children?: React.ReactNode;
+  isPending?: boolean;
 }
 
 export const ResponsiveConfirmation = ({
@@ -39,6 +41,8 @@ export const ResponsiveConfirmation = ({
   cancelButton,
   onConfirm,
   onCancel,
+  children,
+  isPending,
 }: ResponsiveConfirmationProps) => {
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
@@ -50,15 +54,17 @@ export const ResponsiveConfirmation = ({
             <DialogTitle>{title}</DialogTitle>
             <DialogDescription>{message}</DialogDescription>
           </DialogHeader>
+          {children}
           <DialogFooter>
             <Button
               onClickCapture={onCancel}
               variant="secondary"
               onClick={() => onOpenChange(false)}
+              disabled={isPending}
             >
               {cancelButton}
             </Button>
-            <Button variant={variant} onClick={onConfirm}>
+            <Button variant={variant} onClick={onConfirm} disabled={isPending}>
               {confirmButton}
             </Button>
           </DialogFooter>
@@ -74,14 +80,16 @@ export const ResponsiveConfirmation = ({
           <DrawerTitle>{title}</DrawerTitle>
           <DrawerDescription>{message}</DrawerDescription>
         </DrawerHeader>
+        <div className="px-4">{children}</div>
         <DrawerFooter>
-          <Button variant={variant} onClick={onConfirm}>
+          <Button variant={variant} onClick={onConfirm} disabled={isPending}>
             {confirmButton}
           </Button>
           <Button
             onClickCapture={onCancel}
             variant="secondary"
             onClick={() => onOpenChange(false)}
+            disabled={isPending}
           >
             {cancelButton}
           </Button>

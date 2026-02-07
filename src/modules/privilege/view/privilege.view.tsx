@@ -1,75 +1,144 @@
 "use client";
 
+import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Ticket } from "lucide-react";
+import { Filter, RefreshCw, SearchIcon, Ticket } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { OrgHeader } from "@/components/org-header";
+import { Input } from "@/components/ui/custom-input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BottomNavigation } from "@/modules/point/components/BottomNavigation";
 import { PrivilegeCard } from "../components/PrivilegeCard";
 import { RouteConfig } from "@/config/route.config";
-
-// Mock data - replace with real data from API
-const mockPrivileges = [
-  {
-    id: "1",
-    title: "Free Coffee at Starbucks",
-    description:
-      "Enjoy a complimentary coffee of your choice at any Starbucks location",
-    points: 500,
-    category: "Food & Beverage",
-    expiryDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), // 30 days
-  },
-  {
-    id: "2",
-    title: "20% Off at Central Department Store",
-    description: "Get 20% discount on all items at Central Department Store",
-    points: 1000,
-    category: "Shopping",
-    expiryDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 15), // 15 days
-  },
-  {
-    id: "3",
-    title: "Movie Ticket - Major Cineplex",
-    description:
-      "Complimentary movie ticket for any showtime at Major Cineplex",
-    points: 800,
-    category: "Entertainment",
-  },
-  {
-    id: "4",
-    title: "Spa Treatment Voucher",
-    description: "60-minute relaxing spa treatment at selected locations",
-    points: 2000,
-    category: "Wellness",
-    expiryDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 60), // 60 days
-  },
-  {
-    id: "5",
-    title: "Restaurant Voucher - 500 THB",
-    description: "500 THB dining voucher at participating restaurants",
-    points: 1500,
-    category: "Food & Beverage",
-    expiryDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 45), // 45 days
-  },
-  {
-    id: "6",
-    title: "Fitness Class Pass",
-    description: "5 complimentary fitness classes at selected gyms",
-    points: 1200,
-    category: "Wellness",
-  },
-];
+import {
+  useGetRedeemablePrivileges,
+  useRedeemPrivilegesById,
+} from "../hooks/privilege.hooks";
+import { PrivilegeListSkeleton } from "../components/PrivilegePageSkeleton";
+import { LoadingBackdrop } from "@/components/ui/loading-backdrop";
+import { useDebounceValue } from "usehooks-ts";
+import { keepPreviousData } from "@tanstack/react-query";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
+import { getRedeemablePrivilegesApi } from "../api/privilege.api";
+import { PrivilegeRedemptionDialog } from "../components/PrivilegeRedemptionDialog";
+import { OrgLayout } from "@/components/layout/org-layout";
 
 const PrivilegeViewPage = () => {
   const router = useRouter();
   const params = useParams<{ orgId: string }>();
+  const queryClient = useQueryClient();
 
-  const handleRedeem = (privilegeId: string) => {
-    console.log("Redeem privilege:", privilegeId);
-    // TODO: Implement redeem logic
-    // After successful redeem, could navigate to my vouchers
-    // router.push(RouteConfig.PRIVILEGE.HISTORY);
+  const [searchTermInput, setSearchTermInput] = useState("");
+  const [debouncedSearchTerm] = useDebounceValue(searchTermInput, 500);
+  const [filterStatus, setFilterStatus] = useState<
+    "all" | "active" | "expired"
+  >("all");
+  const [redeemTarget, setRedeemTarget] = useState<{
+    id: string;
+    points: number;
+    title: string;
+    imageUrl?: string;
+    description?: string;
+    expiryDate?: Date;
+  } | null>(null);
+  const [isManualRefetching, setIsManualRefetching] = useState(false);
+
+  const handleManualRefresh = async () => {
+    setIsManualRefetching(true);
+    try {
+      await refetch();
+    } finally {
+      setIsManualRefetching(false);
+    }
+  };
+
+  // Debounce search term manually if hook not guaranteed, but for now direct state is fine for low volume
+  // refined: use a simple effect if needed, but let's pass it directly for responsiveness
+
+  const {
+    data: privileges,
+    isLoading,
+    isFetching,
+    refetch,
+  } = useGetRedeemablePrivileges(
+    {
+      orgId: params.orgId,
+    },
+    {
+      fromDate: undefined,
+      toDate: undefined,
+      offset: undefined,
+      limit: undefined,
+      fullTextSearch: debouncedSearchTerm || undefined,
+      status:
+        filterStatus !== "all"
+          ? filterStatus === "active"
+            ? "ACTIVE"
+            : "EXPIRE"
+          : undefined,
+    },
+    {
+      placeholderData: keepPreviousData,
+    }
+  );
+
+  const redeemMutation = useRedeemPrivilegesById({
+    onSuccess: ({ data }) => {
+      if (data.status !== "OK" && data.status !== "SUCCESS") {
+        toast.error(data.description);
+        setRedeemTarget(null);
+        return;
+      }
+
+      setRedeemTarget(null);
+
+      setIsManualRefetching(true);
+      queryClient.invalidateQueries({
+        queryKey: getRedeemablePrivilegesApi.key,
+      });
+      setIsManualRefetching(false);
+
+      toast.success("Redeem success");
+    },
+    onError: (error) => {
+      console.error("Redeem error:", error);
+      toast.error(error.message);
+    },
+  });
+
+  const handleRedeemClick = (
+    privilegeId: string,
+    points: number,
+    title: string,
+    description: string,
+    expiryDate: Date | undefined,
+    imageUrl?: string
+  ) => {
+    setRedeemTarget({
+      id: privilegeId,
+      points,
+      title,
+      description,
+      expiryDate,
+      imageUrl,
+    });
+  };
+
+  const handleConfirmRedeem = () => {
+    if (redeemTarget) {
+      redeemMutation.mutate({
+        params: {
+          orgId: params.orgId,
+          privilegeId: redeemTarget.id,
+        },
+      });
+    }
   };
 
   const handleViewMyVouchers = () => {
@@ -77,48 +146,126 @@ const PrivilegeViewPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Organization Header */}
-      <OrgHeader />
-
+    <OrgLayout>
       {/* Main content with bottom padding for navigation */}
-      <main className="mx-auto max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-4xl p-4 sm:p-6 md:p-8 pb-24">
-        {/* Header */}
-        <div className="flex items-center justify-between pb-4 pt-4">
-          <div className="space-y-2">
+      {/* Header */}
+      <div className="sticky top-16 z-10 flex flex-col gap-4 bg-background pb-4 pt-4">
+        <div className="flex items-center justify-between">
+          <div className="space-y-1">
             <h1 className="text-2xl font-bold">Privileges</h1>
             <p className="text-sm text-muted-foreground">
               Redeem exclusive rewards with your points
             </p>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleViewMyVouchers}
-            className="gap-2"
-          >
-            <Ticket className="h-4 w-4" />
-            My Vouchers
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              onClick={handleManualRefresh}
+              disabled={isManualRefetching}
+            >
+              <RefreshCw
+                className={`h-4 w-4 ${
+                  isManualRefetching ? "animate-spin" : ""
+                }`}
+              />
+              <span className="hidden sm:inline">Refresh</span>
+            </Button>
+            <Button onClick={handleViewMyVouchers} className="gap-2">
+              <Ticket className="h-4 w-4" />
+              <span className="hidden sm:inline">My Vouchers</span>
+            </Button>
+          </div>
         </div>
 
-        {/* Privilege List */}
-        <ScrollArea className="h-[calc(100vh-200px)]">
-          <div className="grid grid-cols-2 gap-3 pb-4">
-            {mockPrivileges.map((privilege) => (
+        {/* Search and Filters */}
+        <div className="flex gap-2">
+          <div className="relative flex-1">
+            <Input
+              placeholder="Search privileges..."
+              value={searchTermInput}
+              onChange={(e) => setSearchTermInput(e.target.value)}
+              startContent={<SearchIcon className="h-4 w-4" />}
+            />
+          </div>
+          <Select
+            value={filterStatus}
+            onValueChange={(value: "all" | "active" | "expired") =>
+              setFilterStatus(value)
+            }
+          >
+            <SelectTrigger size="lg">
+              <Filter className="mr-2 h-4 w-4" />
+              <SelectValue placeholder="Filter" />
+            </SelectTrigger>
+            <SelectContent side="bottom" align="start">
+              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="active">Active</SelectItem>
+              <SelectItem value="expired">Expired</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      {/* Privilege List */}
+      <ScrollArea>
+        {isLoading ? (
+          <PrivilegeListSkeleton />
+        ) : (
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 pb-4">
+            {privileges?.data?.map((privilege) => (
               <PrivilegeCard
                 key={privilege.id}
-                privilege={privilege}
-                onRedeem={handleRedeem}
+                privilege={{
+                  id: privilege.id,
+                  title: privilege.description || privilege.code,
+                  description: privilege.narrative || "",
+                  points: privilege.pointRedeem || 0,
+                  imageUrl: privilege.images?.[0] || "",
+                  expiryDate: privilege.expireDate
+                    ? new Date(privilege.expireDate)
+                    : undefined,
+                  category: privilege.tags || "General",
+                  quota: privilege.currentBalance || 0,
+                }}
+                onRedeem={(id, points) =>
+                  handleRedeemClick(
+                    id,
+                    points,
+                    privilege.description || privilege.code || "",
+                    privilege.narrative || "",
+                    privilege.expireDate
+                      ? new Date(privilege.expireDate)
+                      : undefined,
+                    privilege.images?.[0]
+                  )
+                }
               />
             ))}
+            {!isLoading && privileges?.data?.length === 0 && (
+              <div className="col-span-full py-12 text-center text-muted-foreground">
+                No privileges found
+              </div>
+            )}
           </div>
-        </ScrollArea>
-      </main>
+        )}
+      </ScrollArea>
 
-      {/* Bottom Navigation */}
-      <BottomNavigation />
-    </div>
+      {/* Loading Backdrop for background refreshes - shown if manual refresh OR if fetching without search term */}
+      <LoadingBackdrop
+        show={
+          isManualRefetching || (!searchTermInput && !isLoading && isFetching)
+        }
+      />
+
+      {/* Redemption Confirmation Dialog */}
+      <PrivilegeRedemptionDialog
+        open={!!redeemTarget}
+        onOpenChange={(open) => !open && setRedeemTarget(null)}
+        target={redeemTarget}
+        onConfirm={handleConfirmRedeem}
+        isPending={redeemMutation.isPending}
+      />
+    </OrgLayout>
   );
 };
 

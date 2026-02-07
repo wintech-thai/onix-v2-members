@@ -48,7 +48,7 @@ export const PrivilegeHistoryCard = ({
     >
       <CardContent className="flex gap-3 p-3">
         {/* Image on left */}
-        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-lg bg-muted">
+        <div className="relative h-24 w-32 shrink-0 overflow-hidden rounded-lg bg-muted">
           {history.imageUrl ? (
             <img
               src={history.imageUrl}
@@ -56,9 +56,11 @@ export const PrivilegeHistoryCard = ({
               className="h-full w-full object-cover"
             />
           ) : (
-            <div className="flex h-full items-center justify-center text-xs font-semibold text-muted-foreground">
-              VOUCHER
-            </div>
+            <img
+              src="/default-voucher.jpg"
+              alt={history.title}
+              className="h-full w-full object-cover"
+            />
           )}
         </div>
 
@@ -75,6 +77,8 @@ export const PrivilegeHistoryCard = ({
               {isUsed ? "Used" : "Available"}
             </Badge>
           </div>
+
+          <div>{history.points.toLocaleString()} Points</div>
 
           <div className="space-y-0.5">
             {history.expiryDate && !isUsed && (
