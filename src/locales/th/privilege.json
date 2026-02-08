@@ -1,0 +1,58 @@
+{
+  "pageTitle": "สิทธิพิเศษ",
+  "pageDescription": "แลกรางวัลพิเศษด้วยคะแนนสะสม",
+  "myVouchers": "คูปองของฉัน",
+  "refresh": "รีเฟรช",
+  "searchPlaceholder": "ค้นหาสิทธิพิเศษ...",
+  "filter": {
+    "all": "ทั้งหมด",
+    "active": "ใช้งานได้",
+    "expired": "หมดอายุ"
+  },
+  "noPrivilegesFound": "ไม่พบสิทธิพิเศษ",
+  "card": {
+    "points": "คะแนน",
+    "expire": "หมดอายุ:",
+    "remaining": "คงเหลือ:",
+    "outOfStock": "หมดแล้ว",
+    "redeem": "แลก"
+  },
+  "history": {
+    "pageTitle": "คูปองของฉัน",
+    "noVouchersFound": "ไม่พบคูปอง",
+    "browsePrivileges": "เลือกดูสิทธิพิเศษ",
+    "used": "ใช้แล้ว",
+    "available": "พร้อมใช้งาน",
+    "expires": "หมดอายุ",
+    "usedOn": "ใช้เมื่อ",
+    "points": "คะแนน",
+    "previous": "ก่อนหน้า",
+    "next": "ถัดไป",
+    "pageInfo": "หน้า {{current}} จาก {{total}}"
+  },
+  "voucherDetail": {
+    "pageTitle": "รายละเอียดคูปอง",
+    "voucherCode": "รหัสคูปอง",
+    "qrCode": "QR Code",
+    "showCodeToRedeem": "แสดงรหัสนี้เพื่อใช้คูปอง",
+    "expiredOn": "หมดอายุเมื่อ",
+    "validUntil": "ใช้ได้ถึง",
+    "termsAndConditions": "ข้อกำหนดและเงื่อนไข",
+    "markAsUsed": "ทำเครื่องหมายว่าใช้แล้ว",
+    "voucherUsed": "คูปองนี้ถูกใช้งานแล้ว",
+    "voucherExpired": "คูปองนี้หมดอายุแล้ว"
+  },
+  "redemptionDialog": {
+    "title": "ยืนยันการแลก",
+    "description": "กรุณาตรวจสอบรายละเอียดด้านล่างก่อนดำเนินการ",
+    "expires": "หมดอายุ:",
+    "deductMessage": "จะหักคะแนน",
+    "pointsLabel": "คะแนน",
+    "fromBalance": "จากยอดคะแนนของคุณ",
+    "cancel": "ยกเลิก",
+    "confirmRedeem": "ยืนยันการแลก"
+  },
+  "toast": {
+    "redeemSuccess": "แลกสำเร็จ"
+  }
+}

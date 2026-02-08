@@ -5,6 +5,7 @@ import { Calendar } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useTranslation } from "react-i18next";
 
 interface Privilege {
   id: string;
@@ -23,6 +24,7 @@ interface PrivilegeCardProps {
 }
 
 export const PrivilegeCard = ({ privilege, onRedeem }: PrivilegeCardProps) => {
+  const { t } = useTranslation("privilege");
   const isOutOfStock = privilege.quota <= 0;
 
   return (
@@ -45,7 +47,7 @@ export const PrivilegeCard = ({ privilege, onRedeem }: PrivilegeCardProps) => {
         {isOutOfStock && (
           <div className="absolute inset-0 bg-background/80 flex items-center justify-center backdrop-blur-sm">
             <Badge variant="destructive" className="text-lg px-4 py-1">
-              Out of Stock
+              {t("card.outOfStock")}
             </Badge>
           </div>
         )}
@@ -66,7 +68,9 @@ export const PrivilegeCard = ({ privilege, onRedeem }: PrivilegeCardProps) => {
               <span className="text-xl font-bold text-primary">
                 {privilege.points.toLocaleString()}
               </span>
-              <span className="text-sm text-muted-foreground">points</span>
+              <span className="text-sm text-muted-foreground">
+                {t("card.points")}
+              </span>
             </div>
           </div>
 
@@ -75,7 +79,7 @@ export const PrivilegeCard = ({ privilege, onRedeem }: PrivilegeCardProps) => {
               <div className="flex items-center gap-1">
                 <Calendar className="h-3 w-3" />
                 <span className="line-clamp-1">
-                  Expire:{" "}
+                  {t("card.expire")}{" "}
                   {privilege.expiryDate.toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
@@ -90,7 +94,7 @@ export const PrivilegeCard = ({ privilege, onRedeem }: PrivilegeCardProps) => {
                   privilege.quota < 10 ? "text-red-500" : ""
                 }`}
               >
-                Remaining: {privilege.quota.toLocaleString()}
+                {t("card.remaining")} {privilege.quota.toLocaleString()}
               </span>
             </div>
           </div>
@@ -103,7 +107,7 @@ export const PrivilegeCard = ({ privilege, onRedeem }: PrivilegeCardProps) => {
           disabled={isOutOfStock}
           variant={isOutOfStock ? "outline" : "default"}
         >
-          {isOutOfStock ? "Out of Stock" : "Redeem"}
+          {isOutOfStock ? t("card.outOfStock") : t("card.redeem")}
         </Button>
       </CardContent>
     </Card>

@@ -25,11 +25,17 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
-import { getRedeemablePrivilegesApi } from "../api/privilege.api";
+import {
+  getRedeemablePrivilegesApi,
+  getVouchersApi,
+  getVouchersCountApi,
+} from "../api/privilege.api";
 import { PrivilegeRedemptionDialog } from "../components/PrivilegeRedemptionDialog";
 import { OrgLayout } from "@/components/layout/org-layout";
+import { useTranslation } from "react-i18next";
 
 const PrivilegeViewPage = () => {
+  const { t } = useTranslation("privilege");
   const router = useRouter();
   const params = useParams<{ orgId: string }>();
   const queryClient = useQueryClient();
@@ -102,9 +108,15 @@ const PrivilegeViewPage = () => {
       queryClient.invalidateQueries({
         queryKey: getRedeemablePrivilegesApi.key,
       });
+      queryClient.invalidateQueries({
+        queryKey: getVouchersApi.key,
+      });
+      queryClient.invalidateQueries({
+        queryKey: getVouchersCountApi.key,
+      });
       setIsManualRefetching(false);
 
-      toast.success("Redeem success");
+      toast.success(t("toast.redeemSuccess"));
     },
     onError: (error) => {
       console.error("Redeem error:", error);
@@ -152,9 +164,9 @@ const PrivilegeViewPage = () => {
       <div className="sticky top-16 z-10 flex flex-col gap-4 bg-background pb-4 pt-4">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
-            <h1 className="text-2xl font-bold">Privileges</h1>
+            <h1 className="text-2xl font-bold">{t("pageTitle")}</h1>
             <p className="text-sm text-muted-foreground">
-              Redeem exclusive rewards with your points
+              {t("pageDescription")}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -168,11 +180,11 @@ const PrivilegeViewPage = () => {
                   isManualRefetching ? "animate-spin" : ""
                 }`}
               />
-              <span className="hidden sm:inline">Refresh</span>
+              <span className="hidden sm:inline">{t("refresh")}</span>
             </Button>
             <Button onClick={handleViewMyVouchers} className="gap-2">
               <Ticket className="h-4 w-4" />
-              <span className="hidden sm:inline">My Vouchers</span>
+              <span className="hidden sm:inline">{t("myVouchers")}</span>
             </Button>
           </div>
         </div>
@@ -181,7 +193,7 @@ const PrivilegeViewPage = () => {
         <div className="flex gap-2">
           <div className="relative flex-1">
             <Input
-              placeholder="Search privileges..."
+              placeholder={t("searchPlaceholder")}
               value={searchTermInput}
               onChange={(e) => setSearchTermInput(e.target.value)}
               startContent={<SearchIcon className="h-4 w-4" />}
@@ -198,9 +210,9 @@ const PrivilegeViewPage = () => {
               <SelectValue placeholder="Filter" />
             </SelectTrigger>
             <SelectContent side="bottom" align="start">
-              <SelectItem value="all">All</SelectItem>
-              <SelectItem value="active">Active</SelectItem>
-              <SelectItem value="expired">Expired</SelectItem>
+              <SelectItem value="all">{t("filter.all")}</SelectItem>
+              <SelectItem value="active">{t("filter.active")}</SelectItem>
+              <SelectItem value="expired">{t("filter.expired")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -243,7 +255,7 @@ const PrivilegeViewPage = () => {
             ))}
             {!isLoading && privileges?.data?.length === 0 && (
               <div className="col-span-full py-12 text-center text-muted-foreground">
-                No privileges found
+                {t("noPrivilegesFound")}
               </div>
             )}
           </div>

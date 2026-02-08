@@ -5,6 +5,7 @@ import { Calendar } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { RouteConfig } from "@/config/route.config";
+import { useTranslation } from "react-i18next";
 
 interface PrivilegeHistory {
   id: string;
@@ -32,6 +33,7 @@ const formatDate = (date: Date) => {
 export const PrivilegeHistoryCard = ({
   history,
 }: PrivilegeHistoryCardProps) => {
+  const { t } = useTranslation("privilege");
   const router = useRouter();
   const isUsed = history.status === "used";
 
@@ -74,22 +76,26 @@ export const PrivilegeHistoryCard = ({
               variant={isUsed ? "secondary" : "default"}
               className="text-xs"
             >
-              {isUsed ? "Used" : "Available"}
+              {isUsed ? t("history.used") : t("history.available")}
             </Badge>
           </div>
 
-          <div>{history.points.toLocaleString()} Points</div>
+          <div>
+            {history.points.toLocaleString()} {t("history.points")}
+          </div>
 
           <div className="space-y-0.5">
             {history.expiryDate && !isUsed && (
               <div className="flex items-center gap-1 text-xs text-muted-foreground">
                 <Calendar className="h-3 w-3" />
-                <span>Expires {formatDate(history.expiryDate)}</span>
+                <span>
+                  {t("history.expires")} {formatDate(history.expiryDate)}
+                </span>
               </div>
             )}
             {isUsed && (
               <p className="text-xs text-muted-foreground">
-                Used on {formatDate(history.redeemedAt)}
+                {t("history.usedOn")} {formatDate(history.redeemedAt)}
               </p>
             )}
           </div>

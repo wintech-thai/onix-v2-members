@@ -1,0 +1,58 @@
+{
+  "pageTitle": "Privileges",
+  "pageDescription": "Redeem exclusive rewards with your points",
+  "myVouchers": "My Vouchers",
+  "refresh": "Refresh",
+  "searchPlaceholder": "Search privileges...",
+  "filter": {
+    "all": "All",
+    "active": "Active",
+    "expired": "Expired"
+  },
+  "noPrivilegesFound": "No privileges found",
+  "card": {
+    "points": "points",
+    "expire": "Expire:",
+    "remaining": "Remaining:",
+    "outOfStock": "Out of Stock",
+    "redeem": "Redeem"
+  },
+  "history": {
+    "pageTitle": "My Vouchers",
+    "noVouchersFound": "No vouchers found",
+    "browsePrivileges": "Browse Privileges",
+    "used": "Used",
+    "available": "Available",
+    "expires": "Expires",
+    "usedOn": "Used on",
+    "points": "Points",
+    "previous": "Previous",
+    "next": "Next",
+    "pageInfo": "Page {{current}} of {{total}}"
+  },
+  "voucherDetail": {
+    "pageTitle": "Voucher Details",
+    "voucherCode": "Voucher Code",
+    "qrCode": "QR Code",
+    "showCodeToRedeem": "Show this code to redeem your voucher",
+    "expiredOn": "Expired on",
+    "validUntil": "Valid until",
+    "termsAndConditions": "Terms & Conditions",
+    "markAsUsed": "Mark as Used",
+    "voucherUsed": "This voucher has been used",
+    "voucherExpired": "This voucher has expired"
+  },
+  "redemptionDialog": {
+    "title": "Confirm Redemption",
+    "description": "Please verify the details below before proceeding.",
+    "expires": "Expires:",
+    "deductMessage": "This will deduct",
+    "pointsLabel": "Points",
+    "fromBalance": "from your balance.",
+    "cancel": "Cancel",
+    "confirmRedeem": "Confirm Redeem"
+  },
+  "toast": {
+    "redeemSuccess": "Redeem success"
+  }
+}

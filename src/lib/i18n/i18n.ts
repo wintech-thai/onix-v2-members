@@ -11,12 +11,14 @@ export type i18nKeys =
   | "point"
   | "profile"
   | "scan-item"
+  | "privilege"
 export const i18nNamespaces: i18nKeys[] = [
   "common",
   "auth",
   "point",
   "profile",
   "scan-item",
+  "privilege",
 ];
 
 export default async function initTranslations(

@@ -12,10 +12,12 @@ import { PrivilegeHistoryListSkeleton } from "../components/PrivilegePageSkeleto
 import { keepPreviousData } from "@tanstack/react-query";
 import { OrgLayout } from "@/components/layout/org-layout";
 import { LoadingBackdrop } from "@/components/ui/loading-backdrop";
+import { useTranslation } from "react-i18next";
 
 const ITEMS_PER_PAGE = 10;
 
 const PrivilegeHistoryViewPage = () => {
+  const { t } = useTranslation("privilege");
   const router = useRouter();
   const params = useParams<{ orgId: string }>();
   const [page, setPage] = useState(1);
@@ -77,7 +79,7 @@ const PrivilegeHistoryViewPage = () => {
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div className="space-y-1">
-              <h1 className="text-2xl font-bold">My Vouchers</h1>
+              <h1 className="text-2xl font-bold">{t("history.pageTitle")}</h1>
             </div>
           </div>
           <Button
@@ -88,7 +90,7 @@ const PrivilegeHistoryViewPage = () => {
             }}
           >
             <RefreshCw className="h-4 w-4" />
-            <span className="hidden sm:inline">Refresh</span>
+            <span className="hidden sm:inline">{t("refresh")}</span>
           </Button>
         </div>
 
@@ -121,9 +123,11 @@ const PrivilegeHistoryViewPage = () => {
                 </div>
               ) : (
                 <div className="flex h-60 flex-col items-center justify-center text-center">
-                  <p className="text-muted-foreground">No vouchers found</p>
+                  <p className="text-muted-foreground">
+                    {t("history.noVouchersFound")}
+                  </p>
                   <Button variant="link" onClick={handleBack} className="mt-2">
-                    Browse Privileges
+                    {t("history.browsePrivileges")}
                   </Button>
                 </div>
               )}
@@ -141,10 +145,10 @@ const PrivilegeHistoryViewPage = () => {
               disabled={page <= 1}
             >
               <ChevronLeft className="h-4 w-4 mr-2" />
-              Previous
+              {t("history.previous")}
             </Button>
             <span className="text-sm text-muted-foreground">
-              Page {page} of {totalPages || 1}
+              {t("history.pageInfo", { current: page, total: totalPages || 1 })}
             </span>
             <Button
               variant="outline"
@@ -152,7 +156,7 @@ const PrivilegeHistoryViewPage = () => {
               onClick={handleNextPage}
               disabled={page >= totalPages}
             >
-              Next
+              {t("history.next")}
               <ChevronRight className="h-4 w-4 ml-2" />
             </Button>
           </div>

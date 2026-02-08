@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface PrivilegeRedemptionDialogProps {
   open: boolean;
@@ -30,15 +31,17 @@ export const PrivilegeRedemptionDialog = ({
   onConfirm,
   isPending,
 }: PrivilegeRedemptionDialogProps) => {
+  const { t } = useTranslation("privilege");
+
   if (!target) return null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Confirm Redemption</DialogTitle>
+          <DialogTitle>{t("redemptionDialog.title")}</DialogTitle>
           <DialogDescription>
-            Please verify the details below before proceeding.
+            {t("redemptionDialog.description")}
           </DialogDescription>
         </DialogHeader>
 
@@ -77,7 +80,7 @@ export const PrivilegeRedemptionDialog = ({
               <div className="flex items-center justify-center gap-1.5 text-sm text-muted-foreground bg-muted/50 py-1.5 px-3 rounded-full w-fit mx-auto">
                 <Calendar className="h-4 w-4" />
                 <span>
-                  Expires:{" "}
+                  {t("redemptionDialog.expires")}{" "}
                   {target.expiryDate.toLocaleDateString("en-US", {
                     day: "numeric",
                     month: "short",
@@ -88,11 +91,12 @@ export const PrivilegeRedemptionDialog = ({
             )}
 
             <p className="text-sm text-muted-foreground border-t pt-3 mt-2">
-              This will deduct{" "}
+              {t("redemptionDialog.deductMessage")}{" "}
               <span className="font-bold text-primary text-base">
-                {target.points.toLocaleString()} Points
+                {target.points.toLocaleString()}{" "}
+                {t("redemptionDialog.pointsLabel")}
               </span>{" "}
-              from your balance.
+              {t("redemptionDialog.fromBalance")}
             </p>
           </div>
         </div>
@@ -103,10 +107,10 @@ export const PrivilegeRedemptionDialog = ({
             onClick={() => onOpenChange(false)}
             disabled={isPending}
           >
-            Cancel
+            {t("redemptionDialog.cancel")}
           </Button>
           <Button onClick={onConfirm} disabled={isPending}>
-            Confirm Redeem
+            {t("redemptionDialog.confirmRedeem")}
           </Button>
         </DialogFooter>
       </DialogContent>
