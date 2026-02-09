@@ -78,6 +78,7 @@ interface Resources {
   "privilege": {
     "card": {
       "expire": "Expire:",
+      "expired": "Expired",
       "outOfStock": "Out of Stock",
       "points": "points",
       "redeem": "Redeem",
@@ -91,7 +92,13 @@ interface Resources {
     "history": {
       "available": "Available",
       "browsePrivileges": "Browse Privileges",
+      "daysLeft": "{{days}}d left",
+      "expired": "Expired",
+      "expiredOn": "Expired on {{date}}",
       "expires": "Expires",
+      "expiresInDays": "Expires in {{days}} day(s) ({{date}})",
+      "expiresToday": "Last day!",
+      "lastDayToUse": "Expires today at {{date}}",
       "next": "Next",
       "noVouchersFound": "No vouchers found",
       "pageInfo": "Page {{current}} of {{total}}",

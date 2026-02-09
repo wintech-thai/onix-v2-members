@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "react-i18next";
+import dayjs from "dayjs";
 
 interface Privilege {
   id: string;
@@ -26,6 +27,10 @@ interface PrivilegeCardProps {
 export const PrivilegeCard = ({ privilege, onRedeem }: PrivilegeCardProps) => {
   const { t } = useTranslation("privilege");
   const isOutOfStock = privilege.quota <= 0;
+  const isExpired = privilege.expiryDate
+    ? dayjs(privilege.expiryDate).isBefore(dayjs(), "day")
+    : false;
+  const isUnavailable = isOutOfStock || isExpired;
 
   return (
     <Card className="overflow-hidden transition-all hover:shadow-lg flex flex-col gap-0 h-full p-0 border-0 shadow-sm">
@@ -44,10 +49,10 @@ export const PrivilegeCard = ({ privilege, onRedeem }: PrivilegeCardProps) => {
             className="h-full w-full object-cover transition-transform group-hover:scale-105"
           />
         )}
-        {isOutOfStock && (
+        {isUnavailable && (
           <div className="absolute inset-0 bg-background/80 flex items-center justify-center backdrop-blur-sm">
             <Badge variant="destructive" className="text-lg px-4 py-1">
-              {t("card.outOfStock")}
+              {isExpired ? t("card.expired") : t("card.outOfStock")}
             </Badge>
           </div>
         )}
@@ -104,10 +109,14 @@ export const PrivilegeCard = ({ privilege, onRedeem }: PrivilegeCardProps) => {
           onClick={() => onRedeem?.(privilege.id, privilege.points)}
           className="w-full"
           size="sm"
-          disabled={isOutOfStock}
-          variant={isOutOfStock ? "outline" : "default"}
+          disabled={isUnavailable}
+          variant={isUnavailable ? "outline" : "default"}
         >
-          {isOutOfStock ? t("card.outOfStock") : t("card.redeem")}
+          {isExpired
+            ? t("card.expired")
+            : isOutOfStock
+            ? t("card.outOfStock")
+            : t("card.redeem")}
         </Button>
       </CardContent>
     </Card>

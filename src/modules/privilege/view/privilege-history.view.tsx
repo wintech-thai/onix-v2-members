@@ -114,7 +114,9 @@ const PrivilegeHistoryViewPage = () => {
                           voucher.status === "used" || voucher.isUsed === "YES"
                             ? "used"
                             : "unused",
-                        expiryDate: new Date(voucher.endDate),
+                        expiryDate: voucher.endDate
+                          ? new Date(voucher.endDate)
+                          : undefined,
                         voucherCode: voucher.voucherNo,
                         imageUrl: "",
                       }}

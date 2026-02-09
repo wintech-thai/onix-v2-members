@@ -13,6 +13,7 @@
   "card": {
     "points": "points",
     "expire": "Expire:",
+    "expired": "Expired",
     "remaining": "Remaining:",
     "outOfStock": "Out of Stock",
     "redeem": "Redeem"
@@ -24,6 +25,12 @@
     "used": "Used",
     "available": "Available",
     "expires": "Expires",
+    "expired": "Expired",
+    "expiredOn": "Expired on {{date}}",
+    "daysLeft": "{{days}}d left",
+    "expiresInDays": "Expires in {{days}} day(s) ({{date}})",
+    "expiresToday": "Last day!",
+    "lastDayToUse": "Expires today at {{date}}",
     "usedOn": "Used on",
     "points": "Points",
     "previous": "Previous",

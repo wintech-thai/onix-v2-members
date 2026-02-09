@@ -13,6 +13,7 @@
   "card": {
     "points": "คะแนน",
     "expire": "หมดอายุ:",
+    "expired": "หมดอายุแล้ว",
     "remaining": "คงเหลือ:",
     "outOfStock": "หมดแล้ว",
     "redeem": "แลก"
@@ -24,6 +25,12 @@
     "used": "ใช้แล้ว",
     "available": "พร้อมใช้งาน",
     "expires": "หมดอายุ",
+    "expired": "หมดอายุแล้ว",
+    "expiredOn": "หมดอายุเมื่อ {{date}}",
+    "daysLeft": "อีก {{days}} วัน",
+    "expiresInDays": "อีก {{days}} วันจะหมดอายุ ({{date}})",
+    "expiresToday": "วันสุดท้าย!",
+    "lastDayToUse": "หมดอายุวันนี้ เวลา {{date}}",
     "usedOn": "ใช้เมื่อ",
     "points": "คะแนน",
     "previous": "ก่อนหน้า",
