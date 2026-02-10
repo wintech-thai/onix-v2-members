@@ -33,5 +33,21 @@
       "message": "Do you want to open this link: {{url}}",
       "confirm": "Open"
     }
+  },
+  "error": {
+    "retry": "Retry",
+    "goBack": "Go Back",
+    "network": {
+      "title": "No Connection",
+      "message": "Unable to connect to the server. Please check your internet connection and try again."
+    },
+    "server": {
+      "title": "Server Error",
+      "message": "Something went wrong on our end. Please try again later."
+    },
+    "generic": {
+      "title": "Something went wrong",
+      "message": "Unable to load data. Please try again."
+    }
   }
 }

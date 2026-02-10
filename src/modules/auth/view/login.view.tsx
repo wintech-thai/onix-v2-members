@@ -48,7 +48,12 @@ const LoginViewPage = () => {
       {
         onSuccess: () => {
           toast.success(t("message.loginSuccess"));
-          return router.push(RouteConfig.ROOT(params.orgId));
+
+          // Redirect to saved page (from 401 redirect) or default root
+          const returnUrl = sessionStorage.getItem("returnUrl");
+          sessionStorage.removeItem("returnUrl");
+
+          return router.push(returnUrl || RouteConfig.ROOT(params.orgId));
         },
         onError: () => {
           toast.error(t("message.loginFailed"));

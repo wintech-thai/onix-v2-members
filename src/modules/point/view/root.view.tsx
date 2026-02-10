@@ -84,10 +84,6 @@ const RootViewPage = () => {
   const walletPayload = getWallet.data?.data.wallet;
   const transactions = (getPointTransaction.data?.data || []).slice(0, 6);
 
-  if (!isLoading && !walletPayload) {
-    throw new Error(getWallet.data?.data.description);
-  }
-
   const isRefreshing = getWallet.isFetching || getPointTransaction.isFetching;
 
   return (

@@ -74,6 +74,7 @@ api.interceptors.response.use(
   async (err) => {
     const originalRequest = err.config;
     const status = err?.response?.status;
+    const orgId = Cookies.get(COOKIE_NAMES.ORG_ID);
 
     // ถ้าเป็น 401 และยังไม่เคย retry
     if (status === 401 && !originalRequest._retry) {
@@ -100,38 +101,34 @@ api.interceptors.response.use(
       } catch (refreshError) {
         isRefreshing = false;
         processQueue(refreshError);
-        const orgId = Cookies.get(COOKIE_NAMES.ORG_ID);
+
+        // Save current URL so user returns here after login
+        sessionStorage.setItem("returnUrl", window.location.pathname + window.location.search);
 
         if (!orgId) {
           window.location.href = '/';
         } else {
           window.location.href = `/${orgId}/auth/sign-in`;
         }
-        return Promise.reject(refreshError);
+        // Don't reject — let the page redirect without triggering error UI
+        return new Promise(() => {});
       }
     } else if (status === 401 && originalRequest._retry) {
       // 401 again after retry -> force logout
-      const orgId = Cookies.get(COOKIE_NAMES.ORG_ID);
+
+      // Save current URL so user returns here after login
+      sessionStorage.setItem("returnUrl", window.location.pathname + window.location.search);
 
       if (!orgId) {
         window.location.href = "/";
       } else {
         window.location.href = `/${orgId}/auth/sign-in`;
       }
-      return Promise.reject(err);
+      // Don't reject — let the page redirect without triggering error UI
+      return new Promise(() => {});
     }
 
     // กรณีอื่นๆ ที่ไม่ใช่ 401
-    if (status === 500) {
-      const orgId = Cookies.get(COOKIE_NAMES.ORG_ID);
-
-      if (!orgId) {
-        window.location.href = '/';
-      } else {
-        window.location.href = `/${orgId}/auth/sign-in`;
-      }
-    }
-
     return Promise.reject(err);
   }
 );

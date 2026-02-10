@@ -37,6 +37,22 @@ interface Resources {
         "title": "Open Link"
       }
     },
+    "error": {
+      "generic": {
+        "message": "Unable to load data. Please try again.",
+        "title": "Something went wrong"
+      },
+      "goBack": "Go Back",
+      "network": {
+        "message": "Unable to connect to the server. Please check your internet connection and try again.",
+        "title": "No Connection"
+      },
+      "retry": "Retry",
+      "server": {
+        "message": "Something went wrong on our end. Please try again later.",
+        "title": "Server Error"
+      }
+    },
     "menu": {
       "point": "Point",
       "privilege": "Privilege",
