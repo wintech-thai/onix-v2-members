@@ -76,7 +76,22 @@ async function proxy(req: Request, path: string[]) {
   };
 
   // ยิงรอบแรก
-  const upstream = await fetch(target, init);
+  let upstream: Response;
+  try {
+    upstream = await fetch(target, init);
+  } catch (err) {
+    // Network error — ไม่สามารถเชื่อมต่อ backend ได้ (e.g. no internet, DNS failure, timeout)
+    return new Response(
+      JSON.stringify({
+        code: "NETWORK_ERROR",
+        message: err instanceof Error ? err.message : "Cannot connect to server",
+      }),
+      {
+        status: 502,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
 
   // ถ้าโดน 401 ส่งกลับไปให้ client จัดการ refresh เอง
   // ไม่ต้อง retry ที่นี่

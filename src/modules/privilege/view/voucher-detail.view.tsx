@@ -1,12 +1,12 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ArrowLeft, Calendar, CheckCircle2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BottomNavigation } from "@/modules/point/components/BottomNavigation";
-import { RouteConfig } from "@/config/route.config";
+import { useTranslation } from "react-i18next";
 
 // Mock voucher data - replace with real data from API
 const mockVoucher = {
@@ -32,11 +32,11 @@ const mockVoucher = {
 };
 
 const VoucherDetailViewPage = () => {
+  const { t } = useTranslation("privilege");
   const router = useRouter();
-  const params = useParams<{ orgId: string }>();
 
   const handleBack = () => {
-    router.push(RouteConfig.PRIVILEGE.HISTORY(params.orgId));
+    router.back();
   };
 
   const handleUseVoucher = () => {
@@ -72,7 +72,9 @@ const VoucherDetailViewPage = () => {
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div>
-            <h1 className="text-2xl font-bold">Voucher Details</h1>
+            <h1 className="text-2xl font-bold">
+              {t("voucherDetail.pageTitle")}
+            </h1>
           </div>
         </div>
 
@@ -102,7 +104,7 @@ const VoucherDetailViewPage = () => {
             <div className="flex items-start justify-between gap-3">
               <h2 className="text-2xl font-bold">{mockVoucher.title}</h2>
               <Badge variant={isUsed ? "secondary" : "default"}>
-                {isUsed ? "Used" : "Available"}
+                {isUsed ? t("history.used") : t("history.available")}
               </Badge>
             </div>
             <p className="text-muted-foreground">{mockVoucher.description}</p>
@@ -113,7 +115,9 @@ const VoucherDetailViewPage = () => {
             <CardContent className="p-6">
               <div className="space-y-4">
                 <div className="text-center">
-                  <p className="text-sm text-muted-foreground">Voucher Code</p>
+                  <p className="text-sm text-muted-foreground">
+                    {t("voucherDetail.voucherCode")}
+                  </p>
                   <p className="mt-2 font-mono text-2xl font-bold tracking-wider">
                     {mockVoucher.voucherCode}
                   </p>
@@ -122,12 +126,14 @@ const VoucherDetailViewPage = () => {
                 {/* QR Code Placeholder */}
                 <div className="flex justify-center">
                   <div className="flex h-48 w-48 items-center justify-center rounded-lg border-2 border-dashed border-muted-foreground/25 bg-muted">
-                    <p className="text-sm text-muted-foreground">QR Code</p>
+                    <p className="text-sm text-muted-foreground">
+                      {t("voucherDetail.qrCode")}
+                    </p>
                   </div>
                 </div>
 
                 <p className="text-center text-xs text-muted-foreground">
-                  Show this code to redeem your voucher
+                  {t("voucherDetail.showCodeToRedeem")}
                 </p>
               </div>
             </CardContent>
@@ -140,7 +146,9 @@ const VoucherDetailViewPage = () => {
                 <Calendar className="h-5 w-5 text-muted-foreground" />
                 <div className="flex-1">
                   <p className="text-sm font-medium">
-                    {isExpired ? "Expired on" : "Valid until"}
+                    {isExpired
+                      ? t("voucherDetail.expiredOn")
+                      : t("voucherDetail.validUntil")}
                   </p>
                   <p
                     className={`text-sm ${
@@ -157,7 +165,9 @@ const VoucherDetailViewPage = () => {
           {/* Terms and Conditions */}
           <Card>
             <CardContent className="p-4">
-              <h3 className="mb-3 font-semibold">Terms & Conditions</h3>
+              <h3 className="mb-3 font-semibold">
+                {t("voucherDetail.termsAndConditions")}
+              </h3>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 {mockVoucher.terms.map((term, index) => (
                   <li key={index} className="flex gap-2">
@@ -173,14 +183,14 @@ const VoucherDetailViewPage = () => {
           {canUse && (
             <Button onClick={handleUseVoucher} className="w-full" size="lg">
               <CheckCircle2 className="mr-2 h-5 w-5" />
-              Mark as Used
+              {t("voucherDetail.markAsUsed")}
             </Button>
           )}
 
           {isUsed && (
             <div className="rounded-lg border border-muted bg-muted/50 p-4 text-center">
               <p className="text-sm text-muted-foreground">
-                This voucher has been used
+                {t("voucherDetail.voucherUsed")}
               </p>
             </div>
           )}
@@ -188,7 +198,7 @@ const VoucherDetailViewPage = () => {
           {isExpired && !isUsed && (
             <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-center">
               <p className="text-sm text-destructive">
-                This voucher has expired
+                {t("voucherDetail.voucherExpired")}
               </p>
             </div>
           )}

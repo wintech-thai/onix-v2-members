@@ -62,6 +62,7 @@ const RootViewPage = () => {
   };
 
   const handleQRScanSuccess = (decodedText: string) => {
+    // We keep the logic simple here, just ensure it's a valid URL format
     const url = decodedText.startsWith("http")
       ? decodedText
       : `https://${decodedText}`;
@@ -72,7 +73,9 @@ const RootViewPage = () => {
 
   const handleConfirmNav = () => {
     if (scannedUrl) {
-      window.open(scannedUrl, "_blank", "noopener,noreferrer");
+      // Redirect to our internal API which will inject the header and redirect to the final URL
+      const proxyUrl = `/api/qr-navigate?url=${encodeURIComponent(scannedUrl)}`;
+      window.open(proxyUrl, "_blank", "noopener,noreferrer");
       setScannedUrl(null);
     }
   };
@@ -80,10 +83,6 @@ const RootViewPage = () => {
   const isLoading = getWallet.isLoading || getPointTransaction.isLoading;
   const walletPayload = getWallet.data?.data.wallet;
   const transactions = (getPointTransaction.data?.data || []).slice(0, 6);
-
-  if (!isLoading && !walletPayload) {
-    throw new Error(getWallet.data?.data.description);
-  }
 
   const isRefreshing = getWallet.isFetching || getPointTransaction.isFetching;
 

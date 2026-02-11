@@ -37,6 +37,22 @@ interface Resources {
         "title": "Open Link"
       }
     },
+    "error": {
+      "generic": {
+        "message": "Unable to load data. Please try again.",
+        "title": "Something went wrong"
+      },
+      "goBack": "Go Back",
+      "network": {
+        "message": "Unable to connect to the server. Please check your internet connection and try again.",
+        "title": "No Connection"
+      },
+      "retry": "Retry",
+      "server": {
+        "message": "Something went wrong on our end. Please try again later.",
+        "title": "Server Error"
+      }
+    },
     "menu": {
       "point": "Point",
       "privilege": "Privilege",
@@ -74,6 +90,71 @@ interface Resources {
     "spent": "Spent",
     "viewAll": "View All",
     "yourPoints": "Your Points"
+  },
+  "privilege": {
+    "card": {
+      "expire": "Expire:",
+      "expired": "Expired",
+      "outOfStock": "Out of Stock",
+      "points": "points",
+      "redeem": "Redeem",
+      "remaining": "Remaining:"
+    },
+    "filter": {
+      "active": "Active",
+      "all": "All",
+      "expired": "Expired"
+    },
+    "history": {
+      "available": "Available",
+      "browsePrivileges": "Browse Privileges",
+      "daysLeft": "{{days}}d left",
+      "expired": "Expired",
+      "expiredOn": "Expired on {{date}}",
+      "expires": "Expires",
+      "expiresInDays": "Expires in {{days}} day(s) ({{date}})",
+      "expiresToday": "Last day!",
+      "lastDayToUse": "Expires today at {{date}}",
+      "next": "Next",
+      "noVouchersFound": "No vouchers found",
+      "pageInfo": "Page {{current}} of {{total}}",
+      "pageTitle": "My Vouchers",
+      "points": "Points",
+      "previous": "Previous",
+      "used": "Used",
+      "usedOn": "Used on"
+    },
+    "myVouchers": "My Vouchers",
+    "noPrivilegesFound": "No privileges found",
+    "pageDescription": "Redeem exclusive rewards with your points",
+    "pageTitle": "Privileges",
+    "redemptionDialog": {
+      "cancel": "Cancel",
+      "confirmRedeem": "Confirm Redeem",
+      "deductMessage": "This will deduct",
+      "description": "Please verify the details below before proceeding.",
+      "expires": "Expires:",
+      "fromBalance": "from your balance.",
+      "pointsLabel": "Points",
+      "title": "Confirm Redemption"
+    },
+    "refresh": "Refresh",
+    "searchPlaceholder": "Search privileges...",
+    "toast": {
+      "redeemSuccess": "Redeem success"
+    },
+    "voucherDetail": {
+      "expiredOn": "Expired on",
+      "markAsUsed": "Mark as Used",
+      "pageTitle": "Voucher Details",
+      "qrCode": "QR Code",
+      "showCodeToRedeem": "Show this code to redeem your voucher",
+      "termsAndConditions": "Terms & Conditions",
+      "validUntil": "Valid until",
+      "voucherCode": "Voucher Code",
+      "voucherExpired": "This voucher has expired",
+      "voucherUsed": "This voucher has been used"
+    }
   },
   "profile": {
     "action": {

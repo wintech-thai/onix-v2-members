@@ -33,12 +33,15 @@ function Field({
   children,
   error,
   helper,
+  id: idProp,
 }: {
   children: React.ReactNode;
   error?: string;
   helper?: string;
+  id?: string;
 }) {
-  const id = React.useId();
+  const generatedId = React.useId();
+  const id = idProp || generatedId;
   const [hasLeft, setHasLeft] = React.useState(false);
   const [hasRight, setHasRight] = React.useState(false);
 
@@ -242,7 +245,7 @@ function Input({
   ...props
 }: InputProps) {
   return (
-    <InputBase.Field error={errorMessage} helper={helper}>
+    <InputBase.Field error={errorMessage} helper={helper} id={props.id}>
       {label && (
         <InputBase.Label required={isRequired}>{label}</InputBase.Label>
       )}

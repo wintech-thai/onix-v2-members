@@ -1,152 +1,170 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, RefreshCw } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BottomNavigation } from "@/modules/point/components/BottomNavigation";
 import { PrivilegeHistoryCard } from "../components/PrivilegeHistoryCard";
 import { RouteConfig } from "@/config/route.config";
+import { useGetVouchers, useGetVoucherCount } from "../hooks/privilege.hooks";
+import { PrivilegeHistoryListSkeleton } from "../components/PrivilegePageSkeleton";
+import { keepPreviousData } from "@tanstack/react-query";
+import { OrgLayout } from "@/components/layout/org-layout";
+import { LoadingBackdrop } from "@/components/ui/loading-backdrop";
+import { useTranslation } from "react-i18next";
 
-// Mock data - replace with real data from API
-const mockVouchers = [
-  {
-    id: "h1",
-    title: "Free Coffee at Starbucks",
-    points: 500,
-    redeemedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2), // 2 days ago
-    status: "unused" as const,
-    expiryDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 28), // 28 days
-    voucherCode: "STAR-2024-ABC123",
-  },
-  {
-    id: "h2",
-    title: "20% Off at Central Department Store",
-    points: 1000,
-    redeemedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10), // 10 days ago
-    status: "unused" as const,
-    expiryDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5), // 5 days
-    voucherCode: "CENTRAL-2024-DEF456",
-  },
-  {
-    id: "h3",
-    title: "Restaurant Voucher - 500 THB",
-    points: 1500,
-    redeemedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 1), // 1 day ago
-    status: "unused" as const,
-    expiryDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 43), // 43 days
-    voucherCode: "REST-2024-JKL012",
-  },
-  {
-    id: "h4",
-    title: "Movie Ticket - Major Cineplex",
-    points: 800,
-    redeemedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5), // 5 days ago
-    status: "used" as const,
-    voucherCode: "MAJOR-2024-XYZ789",
-  },
-  {
-    id: "h5",
-    title: "Free Coffee at Starbucks",
-    points: 500,
-    redeemedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 15), // 15 days ago
-    status: "used" as const,
-    voucherCode: "STAR-2024-GHI789",
-  },
-  {
-    id: "h6",
-    title: "Spa Treatment Voucher",
-    points: 2000,
-    redeemedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 20), // 20 days ago
-    status: "used" as const,
-    voucherCode: "SPA-2024-MNO345",
-  },
-];
+const ITEMS_PER_PAGE = 10;
 
 const PrivilegeHistoryViewPage = () => {
+  const { t } = useTranslation("privilege");
   const router = useRouter();
   const params = useParams<{ orgId: string }>();
-  const [activeTab, setActiveTab] = useState("available");
+  const [page, setPage] = useState(1);
 
-  const availableVouchers = mockVouchers.filter((v) => v.status === "unused");
-  const usedVouchers = mockVouchers.filter((v) => v.status === "used");
+  const { data: voucherCountResponse, refetch: refetchVoucherCount } =
+    useGetVoucherCount(
+      {
+        orgId: params.orgId,
+      },
+      {}
+    );
+
+  const voucherCount = voucherCountResponse?.data || 0;
+
+  const getVoucher = useGetVouchers(
+    {
+      orgId: params.orgId,
+    },
+    {
+      offset: (page - 1) * ITEMS_PER_PAGE,
+      limit: ITEMS_PER_PAGE,
+    },
+    {
+      placeholderData: keepPreviousData,
+      refetchOnWindowFocus: true,
+    }
+  );
+
+  const vouchers = getVoucher.data?.data || [];
+  const totalPages = Math.ceil(voucherCount / ITEMS_PER_PAGE);
 
   const handleBack = () => {
     router.push(RouteConfig.PRIVILEGE.LIST(params.orgId));
   };
 
+  const handlePreviousPage = () => {
+    if (page > 1) setPage((p) => p - 1);
+  };
+
+  const handleNextPage = () => {
+    if (page < totalPages) setPage((p) => p + 1);
+  };
+
   return (
-    <div className="min-h-screen bg-background">
+    <OrgLayout>
+      {/* Loading Backdrop for background refreshes */}
+      <LoadingBackdrop show={!getVoucher.isLoading && getVoucher?.isFetching} />
       {/* Main content with bottom padding for navigation */}
-      <main className="mx-auto max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-4xl p-4 sm:p-6 md:p-8 pb-24">
+      <main>
         {/* Header with back button */}
-        <div className="flex items-center gap-3 pb-4 pt-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleBack}
-            className="h-9 w-9"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <div className="space-y-1">
-            <h1 className="text-2xl font-bold">My Vouchers</h1>
+        <div className="flex items-center justify-between pb-2">
+          <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleBack}
+              className="h-9 w-9"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div className="space-y-1">
+              <h1 className="text-2xl font-bold">{t("history.pageTitle")}</h1>
+            </div>
           </div>
+          <Button
+            variant="outline"
+            onClick={() => {
+              getVoucher.refetch();
+              refetchVoucherCount();
+            }}
+          >
+            <RefreshCw className="h-4 w-4" />
+            <span className="hidden sm:inline">{t("refresh")}</span>
+          </Button>
         </div>
 
-        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="available">Available</TabsTrigger>
-            <TabsTrigger value="used">Used</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="available" className="mt-4">
-            <ScrollArea className="h-[calc(100vh-240px)]">
-              {availableVouchers.length > 0 ? (
-                <div className="space-y-2 pb-4">
-                  {availableVouchers.map((voucher) => (
-                    <PrivilegeHistoryCard key={voucher.id} history={voucher} />
+        <ScrollArea className="h-[calc(100vh-275px)]">
+          {getVoucher.isLoading ? (
+            <PrivilegeHistoryListSkeleton />
+          ) : (
+            <div className="space-y-4 pb-4">
+              {vouchers && vouchers.length > 0 ? (
+                <div className="space-y-2">
+                  {vouchers.map((voucher) => (
+                    <PrivilegeHistoryCard
+                      key={voucher.id}
+                      history={{
+                        id: voucher.id,
+                        title:
+                          voucher.privilegeName || voucher.description || "",
+                        points: voucher?.redeemPrice ?? 0,
+                        redeemedAt: new Date(voucher.createdDate),
+                        status:
+                          voucher.status === "used" || voucher.isUsed === "YES"
+                            ? "used"
+                            : "unused",
+                        expiryDate: voucher.endDate
+                          ? new Date(voucher.endDate)
+                          : undefined,
+                        voucherCode: voucher.voucherNo,
+                        imageUrl: "",
+                      }}
+                    />
                   ))}
                 </div>
               ) : (
                 <div className="flex h-60 flex-col items-center justify-center text-center">
                   <p className="text-muted-foreground">
-                    No available vouchers yet
+                    {t("history.noVouchersFound")}
                   </p>
                   <Button variant="link" onClick={handleBack} className="mt-2">
-                    Browse Privileges
+                    {t("history.browsePrivileges")}
                   </Button>
                 </div>
               )}
-            </ScrollArea>
-          </TabsContent>
+            </div>
+          )}
+        </ScrollArea>
 
-          <TabsContent value="used" className="mt-4">
-            <ScrollArea className="h-[calc(100vh-240px)]">
-              {usedVouchers.length > 0 ? (
-                <div className="space-y-2 pb-4">
-                  {usedVouchers.map((voucher) => (
-                    <PrivilegeHistoryCard key={voucher.id} history={voucher} />
-                  ))}
-                </div>
-              ) : (
-                <div className="flex h-60 flex-col items-center justify-center text-center">
-                  <p className="text-muted-foreground">
-                    ยังไม่มีประวัติการใช้งาน
-                  </p>
-                </div>
-              )}
-            </ScrollArea>
-          </TabsContent>
-        </Tabs>
+        {/* Pagination Controls */}
+        {!getVoucher.isLoading && voucherCount > 0 && (
+          <div className="flex items-center justify-between pt-4 border-t">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handlePreviousPage}
+              disabled={page <= 1}
+            >
+              <ChevronLeft className="h-4 w-4 mr-2" />
+              {t("history.previous")}
+            </Button>
+            <span className="text-sm text-muted-foreground">
+              {t("history.pageInfo", { current: page, total: totalPages || 1 })}
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleNextPage}
+              disabled={page >= totalPages}
+            >
+              {t("history.next")}
+              <ChevronRight className="h-4 w-4 ml-2" />
+            </Button>
+          </div>
+        )}
       </main>
-
-      {/* Bottom Navigation */}
-      <BottomNavigation />
-    </div>
+    </OrgLayout>
   );
 };
 

@@ -66,12 +66,12 @@ export const ProductCard = ({ product, onPurchase }: ProductCardProps) => {
         <div className="flex flex-col gap-0.5">
           <div className="flex items-baseline gap-1">
             <span className="text-base font-bold">
-              ฿{product.price.toLocaleString()}
+              ฿{product.price?.toLocaleString()}
             </span>
           </div>
           <div className="flex items-baseline gap-1 text-xs text-muted-foreground">
             <span className="font-semibold text-primary">
-              {product.points.toLocaleString()}
+              {product.points?.toLocaleString()}
             </span>
             <span>pts</span>
           </div>

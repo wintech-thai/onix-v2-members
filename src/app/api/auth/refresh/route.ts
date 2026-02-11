@@ -91,6 +91,7 @@ export async function POST(req: Request) {
       name: COOKIE_NAMES.ORG_ID,
       value: String(orgId),
       ...COOKIE_OPTIONS,
+      httpOnly: false,
       maxAge: TOKEN_EXPIRY.ORG_ID_EXPIRY_SECONDS,
     });
 
