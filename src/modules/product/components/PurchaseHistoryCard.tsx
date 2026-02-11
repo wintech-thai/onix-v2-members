@@ -75,11 +75,11 @@ export const PurchaseHistoryCard = ({ history }: PurchaseHistoryCardProps) => {
               <p className="font-semibold">
                 {history.paymentMethod === "cash" ? (
                   <span className="text-blue-600">
-                    ฿{history.price.toLocaleString()}
+                    ฿{history.price?.toLocaleString()}
                   </span>
                 ) : (
                   <span className="text-purple-600">
-                    {history.price.toLocaleString()} points
+                    {history.price?.toLocaleString()} points
                   </span>
                 )}
               </p>

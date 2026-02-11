@@ -71,7 +71,7 @@ export const PrivilegeCard = ({ privilege, onRedeem }: PrivilegeCardProps) => {
           <div className="flex items-center justify-between">
             <div className="flex items-baseline gap-1">
               <span className="text-xl font-bold text-primary">
-                {privilege.points.toLocaleString()}
+                {privilege.points?.toLocaleString()}
               </span>
               <span className="text-sm text-muted-foreground">
                 {t("card.points")}
@@ -99,7 +99,7 @@ export const PrivilegeCard = ({ privilege, onRedeem }: PrivilegeCardProps) => {
                   privilege.quota < 10 ? "text-red-500" : ""
                 }`}
               >
-                {t("card.remaining")} {privilege.quota.toLocaleString()}
+                {t("card.remaining")} {privilege.quota?.toLocaleString()}
               </span>
             </div>
           </div>

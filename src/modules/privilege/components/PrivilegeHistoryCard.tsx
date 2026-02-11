@@ -135,7 +135,7 @@ export const PrivilegeHistoryCard = ({
           </div>
 
           <div>
-            {history.points.toLocaleString()} {t("history.points")}
+            {history.points?.toLocaleString()} {t("history.points")}
           </div>
 
           <div className="space-y-0.5">

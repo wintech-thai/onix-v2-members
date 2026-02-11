@@ -93,7 +93,7 @@ export const PrivilegeRedemptionDialog = ({
             <p className="text-sm text-muted-foreground border-t pt-3 mt-2">
               {t("redemptionDialog.deductMessage")}{" "}
               <span className="font-bold text-primary text-base">
-                {target.points.toLocaleString()}{" "}
+                {target.points?.toLocaleString()}{" "}
                 {t("redemptionDialog.pointsLabel")}
               </span>{" "}
               {t("redemptionDialog.fromBalance")}

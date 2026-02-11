@@ -108,7 +108,7 @@ const PrivilegeHistoryViewPage = () => {
                         id: voucher.id,
                         title:
                           voucher.privilegeName || voucher.description || "",
-                        points: voucher.redeemPrice,
+                        points: voucher?.redeemPrice ?? 0,
                         redeemedAt: new Date(voucher.createdDate),
                         status:
                           voucher.status === "used" || voucher.isUsed === "YES"

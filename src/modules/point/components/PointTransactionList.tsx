@@ -108,7 +108,7 @@ export const PointTransactionList = ({
                       }`}
                     >
                       {isEarned ? "+" : "-"}
-                      {transaction.txAmount.toLocaleString()}
+                      {transaction.txAmount?.toLocaleString()}
                     </span>
                     <Badge
                       variant={isEarned ? "default" : "secondary"}

@@ -35,7 +35,7 @@ export const PointCard = ({ points, onBuyPoints }: PointCardProps) => {
         <div className="space-y-1">
           <div className="flex items-baseline gap-2">
             <span className="text-5xl font-bold tracking-tight text-white">
-              {points.toLocaleString()}
+              {points?.toLocaleString()}
             </span>
             <span className="text-lg font-medium text-white/80">
               {t("pts")}
