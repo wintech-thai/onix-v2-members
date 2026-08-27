@@ -157,3 +157,5 @@ jobs:
         text: "Done deploying [please-scan-member] [${{ needs.build1.outputs.imageTag }}] to [${{ needs.build1.outputs.autoDeployEnv }}]"
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }} # required
+
+        
